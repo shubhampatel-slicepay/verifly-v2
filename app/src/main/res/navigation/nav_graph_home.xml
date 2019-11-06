@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nav_login"
+        app:startDestination="@id/dashboardFragment">
+
+    <fragment
+            android:id="@+id/dashboardFragment"
+            android:name="com.slice.verifly.features.home.dashboard.DashboardFragment"
+            android:label="DashboardFragment" >
+        <action
+                android:id="@+id/action_dashboardFragment_to_tasksListFragment"
+                app:destination="@id/tasksListFragment" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/tasksListFragment"
+            android:name="com.slice.verifly.features.home.taskslist.TasksListFragment"
+            android:label="TasksListFragment" >
+        <action
+                android:id="@+id/action_tasksListFragment_to_taskDetailsFragment"
+                app:destination="@id/taskDetailsFragment" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/taskDetailsFragment"
+            android:name="com.slice.verifly.features.home.taskdetails.TaskDetailsFragment"
+            android:label="TaskDetailsFragment" />
+</navigation>

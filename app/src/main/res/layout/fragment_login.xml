@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/padding_regular"
+        android:background="@color/white"
+        android:id="@+id/cl_loginRootContainer">
+
+    <ImageView
+            android:id="@+id/iv_loginLogo"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/logo"
+            android:layout_marginTop="@dimen/space_normal"
+            android:src="@drawable/logo_verifly_login"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="contentDescription" />
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_loginNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_medium"
+            android:background="@drawable/bg_text_input_layout"
+            android:hint="@string/login_phone_field_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_loginLogo">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_loginNumber"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/field"
+                android:inputType="number"
+                android:maxLength="10"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_normal"
+                android:padding="@dimen/padding_medium"
+                android:background="@android:color/transparent"
+                tools:text="1234567890" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_loginPassword"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_regular"
+            android:background="@drawable/bg_text_input_layout"
+            android:hint="@string/login_password_field_hint"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_loginNumber">
+
+        <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_loginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/field"
+                android:inputType="textPassword"
+                android:maxLength="20"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_normal"
+                android:padding="@dimen/padding_medium"
+                android:background="@android:color/transparent"
+                tools:text="slicepay@1234" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+            android:id="@+id/button_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_small"
+            android:paddingStart="@dimen/padding_xlarge"
+            android:paddingEnd="@dimen/padding_xlarge"
+            android:text="@string/login_button_text"
+            android:textAllCaps="true"
+            android:background="@drawable/border_orange"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/til_loginPassword"
+            android:enabled="false" />
+
+    <TextView
+            android:id="@+id/tv_loginForgotPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:padding="@dimen/padding_small"
+            android:text="@string/login_forgot_password_text"
+            android:background="@drawable/border_cyan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_login"
+            android:clickable="true"
+            android:focusable="true" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/corner_normal"
+        app:cardElevation="@dimen/elevation_small"
+        app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_regular"
+                android:textColor="@color/black"
+                android:gravity="start"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:paddingTop="@dimen/padding_medium"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Dialog Title"/>
+
+        <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_normal"
+                android:textColor="@color/black"
+                android:gravity="start"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:paddingStart="@dimen/padding_medium"
+                android:paddingEnd="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@id/tv_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Dialog Message: Welcome to Verifly."/>
+
+        <TextView
+                android:id="@+id/tv_positive_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_regular1"
+                android:textColor="@color/colorAccent"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:layout_marginTop="@dimen/margin_regular"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:paddingTop="@dimen/padding_medium"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
+                android:paddingBottom="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@id/tv_message"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="OK" />
+
+        <TextView
+                android:id="@+id/tv_negative_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_regular1"
+                android:textColor="@color/dark_gray"
+                android:gravity="center"
+                android:textAllCaps="true"
+                android:layout_marginTop="@dimen/margin_regular"
+                android:layout_marginBottom="@dimen/margin_medium"
+                android:paddingTop="@dimen/padding_medium"
+                android:paddingStart="@dimen/padding_large"
+                android:paddingEnd="@dimen/padding_large"
+                android:paddingBottom="@dimen/padding_medium"
+                app:layout_constraintTop_toBottomOf="@id/tv_message"
+                app:layout_constraintEnd_toStartOf="@id/tv_positive_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:text="CANCEL" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4A4A4A</color>
+    <color name="colorPrimaryDark">#333333</color>
+    <color name="colorAccent">#FF8500</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="gray">#BDBDBD</color>
+    <color name="dark_gray">#848484</color>
+
+    <color name="background">#FAFAFA</color>
+    <color name="text_color">#4A4A4A</color>
+    <color name="error">#ff0000</color>
+    <color name="indicator">#D6F6F0</color>
+    <color name="gray_divider">#33979797</color>
+    <color name="text_bg">#3D000000</color>
+    <color name="filter_bg">#3D000000</color>
+    <color name="tab_unselected">#9B9B9B</color>
+    <color name="tab_indicator">#FF8500</color>
+    <color name="hint_color">#9B9B9B</color>
+    <color name="task_complete">#42BCA1</color>
+    <color name="submit_enable">#FF8500</color>
+    <color name="pale_red">#DB4E4B</color>
+    <color name="missing_field_color">#F29FA9</color>
+</resources>

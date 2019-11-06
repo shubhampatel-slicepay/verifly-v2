@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/fl_dashboardRootContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_dashboardContents"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            tools:visibility="visible">
+
+        <TextView
+                android:id="@+id/tv_newStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_gray"
+                android:gravity="center"
+                android:padding="@dimen/padding_medium"
+                android:text="@string/dashboard_new_status"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_regular"
+                app:layout_constraintEnd_toStartOf="@+id/tv_ongoingStatus"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/tv_ongoingStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_gray"
+                android:gravity="center"
+                android:padding="@dimen/padding_medium"
+                android:text="@string/dashboard_ongoing_status"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_regular"
+                app:layout_constraintEnd_toStartOf="@+id/tv_completedStatus"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_newStatus"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+                android:id="@+id/tv_completedStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_gray"
+                android:gravity="center"
+                android:padding="@dimen/padding_medium"
+                android:text="@string/dashboard_completed_status"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_regular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/tv_ongoingStatus"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+                android:id="@+id/ll_statusFragmentContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_small1"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_newStatus" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+            android:id="@+id/tv_dashboardBlank"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_normal"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="@string/dashboard_blank_message"
+            android:textSize="@dimen/text_normal"
+            android:textColor="@color/pale_red"
+            tools:visibility="visible"/>
+
+</FrameLayout>

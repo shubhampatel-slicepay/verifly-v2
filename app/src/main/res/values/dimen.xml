@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Text size-->
+    <dimen name="text_tiny">8sp</dimen>
+    <dimen name="text_small">10sp</dimen>
+    <dimen name="text_medium">12sp</dimen>
+    <dimen name="text_medium1">13sp</dimen>
+    <dimen name="text_normal">14sp</dimen>
+    <dimen name="text_regular">16sp</dimen>
+    <dimen name="text_regular1">18sp</dimen>
+    <dimen name="text_large">20sp</dimen>
+    <dimen name="text_xlarge">24sp</dimen>
+    <dimen name="text_xxlarge">28sp</dimen>
+    <dimen name="text_xxxlarge">32sp</dimen>
+
+    <!-- Padding -->
+    <dimen name="padding_tiny">2dp</dimen>
+    <dimen name="padding_small">4dp</dimen>
+    <dimen name="padding_small1">6dp</dimen>
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_medium1">10dp</dimen>
+    <dimen name="padding_normal">12dp</dimen>
+    <dimen name="padding_normal1">14dp</dimen>
+    <dimen name="padding_regular">16dp</dimen>
+    <dimen name="padding_regular1">20dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+    <dimen name="padding_xlarge">32dp</dimen>
+    <dimen name="padding_xxlarge">64dp</dimen>
+
+    <!-- Margin -->
+    <dimen name="margin_tiny">2dp</dimen>
+    <dimen name="margin_small">4dp</dimen>
+    <dimen name="margin_small1">6dp</dimen>
+    <dimen name="margin_medium">8dp</dimen>
+    <dimen name="margin_medium1">10dp</dimen>
+    <dimen name="margin_normal">12dp</dimen>
+    <dimen name="margin_normal1">14dp</dimen>
+    <dimen name="margin_regular">16dp</dimen>
+    <dimen name="margin_regular1">20dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_xlarge">32dp</dimen>
+    <dimen name="margin_xxlarge">64dp</dimen>
+
+    <!-- Images -->
+    <dimen name="image_tiny">12dp</dimen>
+    <dimen name="image_small">24dp</dimen>
+    <dimen name="image_medium">48dp</dimen>
+    <dimen name="image_normal">80dp</dimen>
+    <dimen name="image_regular">100dp</dimen>
+    <dimen name="image_large">120dp</dimen>
+    <dimen name="image_xlarge">150dp</dimen>
+    <dimen name="image_xxlarge">180</dimen>
+    <dimen name="image_xxxlarge">200sp</dimen>
+
+    <!-- Spaces -->
+    <dimen name="space_small">32dp</dimen>
+    <dimen name="space_medium">64dp</dimen>
+    <dimen name="space_normal">80dp</dimen>
+    <dimen name="space_normal1">100dp</dimen>
+    <dimen name="space_regular">128dp</dimen>
+    <dimen name="space_large">256dp</dimen>
+
+    <!-- Corner radius -->
+    <dimen name="corner_small">3dp</dimen>
+    <dimen name="corner_medium">6dp</dimen>
+    <dimen name="corner_normal">9dp</dimen>
+    <dimen name="corner_regular">12dp</dimen>
+    <dimen name="corner_large">15dp</dimen>
+
+    <!-- Elevation -->
+    <dimen name="elevation_small">2dp</dimen>
+    <dimen name="elevation_medium">4dp</dimen>
+    <dimen name="elevation_normal">6dp</dimen>
+    <dimen name="elevation_regular">8dp</dimen>
+    <dimen name="elevation_large">10dp</dimen>
+
+    <dimen name="logo">64dp</dimen>
+    <dimen name="field">36dp</dimen>
+</resources>

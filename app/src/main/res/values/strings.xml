@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">Verifly</string>
+
+    <!-- Splash -->
+    <string name="app_title">VERIFLY</string>
+
+    <!-- Login -->
+    <string name="login_phone_field_hint">Phone Number *</string>
+    <string name="login_password_field_hint">Password *</string>
+    <string name="login_button_text">LOGIN</string>
+    <string name="login_forgot_password_text">Forgot your password?</string>
+
+    <!-- Reset password -->
+    <string name="reset_password_title">Forgot Password !!</string>
+    <string name="reset_password_main_message">Please enter your registered phone number here in order to reset the password.</string>
+    <string name="reset_password_main_field_hint">Phone Number</string>
+    <string name="reset_password_otp_message">Please enter the OTP sent to your registered phone number.</string>
+    <string name="reset_password_otp_field_hint">OTP</string>
+    <string name="reset_password_otp_resend">Resend OTP</string>
+    <string name="reset_password_success_status">Your password has been reset successfully.</string>
+    <string name="reset_password_fail_status">Your password reset failed. Please try again.</string>
+    <string name="reset_password_status_retry">Try Again</string>
+    <string name="reset_password_status_login">Log In</string>
+
+    <!-- Change password -->
+    <string name="change_password_title">Create a new password</string>
+    <string name="change_password_new_hint">New password *</string>
+    <string name="change_password_confirm_hint">Confirm password *</string>
+    <string name="change_password_button">Reset</string>
+
+    <!-- Dashboard -->
+    <string name="dashboard_blank_message">Currently experiencing problem in fetching data. Please try again later.</string>
+    <string name="dashboard_new_status">New</string>
+    <string name="dashboard_ongoing_status">Ongoing</string>
+    <string name="dashboard_completed_status">Completed</string>
+</resources>

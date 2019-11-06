@@ -11,7 +11,7 @@ import com.slice.verifly.base.BaseFragment
 import com.slice.verifly.features.home.communicator.UsersTasksRecyclerAdapterCallback
 import com.slice.verifly.features.home.adapter.UsersTasksRecyclerAdapter
 import com.slice.verifly.features.home.viewmodel.DashboardFragmentViewModel
-import com.slice.verifly.models.tasksorganized.TasksOrganizedModel
+import com.slice.verifly.features.home.models.TasksOrganizedModel
 import kotlinx.android.synthetic.main.fragment_users_tasks.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,28 +41,16 @@ class UsersTasksNewFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpObservers()
-    }
-
-    private fun setUpObservers() {
-        viewModel.getNewUsersTasks().observe(this, Observer { response ->
-            response?.let {
-                if (it.isNotEmpty()) {
-                    populateRecycler(it)
-                }
-            }
-        })
+        viewModel.newUsersTasksList?.let {
+            populateRecycler(it)
+        }
     }
 
     // Operations
 
     private fun populateRecycler(data: List<TasksOrganizedModel>) {
         if (adapter == null) {
-            adapter =
-                UsersTasksRecyclerAdapter(
-                    data,
-                    this
-                )
+            adapter = UsersTasksRecyclerAdapter(data, this)
         }
         with(rv_usersTasksList) {
             layoutManager = LinearLayoutManager(activity)

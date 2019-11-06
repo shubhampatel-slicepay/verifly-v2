@@ -10,7 +10,7 @@ class LoginFragmentRepository(private val dataManagerHelper: DataManagerHelper) 
 
     suspend fun logIn(loginRequest: LoginRequestModel): String {
         val obtainedData = dataManagerHelper.logIn(loginRequest)
-        manager.loginData(loginRequest.userid, obtainedData?.body?.data)
+        manager.loginData(loginRequest.userid, obtainedData?.body?.userToken, obtainedData?.body?.data)
         return if(obtainedData?.body?.userToken.isObjectNotEmpty()) {
             Constants.SUCCESS_RESPONSE_STATUS
         } else {

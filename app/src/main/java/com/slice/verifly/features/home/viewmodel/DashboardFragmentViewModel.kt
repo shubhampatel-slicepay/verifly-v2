@@ -6,11 +6,15 @@ import com.slice.verifly.base.BaseViewModel
 import com.slice.verifly.base.ErrorCommunicator
 import com.slice.verifly.features.home.repository.DashboardFragmentRepository
 import com.slice.verifly.models.tasks.Task
-import com.slice.verifly.models.tasksorganized.TasksOrganizedModel
+import com.slice.verifly.features.home.models.TasksOrganizedModel
 import com.slice.verifly.utility.Constants
 import kotlinx.coroutines.Dispatchers
 
-class DashboardFragmentViewModel(private val repository: DashboardFragmentRepository): BaseViewModel(), ErrorCommunicator {
+class DashboardFragmentViewModel(private val repository: DashboardFragmentRepository) : BaseViewModel(), ErrorCommunicator {
+
+    var newUsersTasksList: List<TasksOrganizedModel>? = null
+    var ongoingUsersTasksList: List<TasksOrganizedModel>? = null
+    var completedUsersTasksList: List<TasksOrganizedModel>? = null
 
     fun getAssignedTasks(): LiveData<List<Task?>?> {
         return liveData(Dispatchers.IO) {
@@ -18,21 +22,27 @@ class DashboardFragmentViewModel(private val repository: DashboardFragmentReposi
         }
     }
 
-    fun getNewUsersTasks(): LiveData<List<TasksOrganizedModel>?> {
-        return liveData(Dispatchers.Default) {
-            emit(repository.newUsersTasksList?.toList())
+    fun formatUsersTasks(
+        data: List<Task?>
+    ): LiveData<Triple<MutableList<TasksOrganizedModel>, MutableList<TasksOrganizedModel>, MutableList<TasksOrganizedModel>>?> {
+        return liveData(Dispatchers.IO) {
+            val formattedUsersTasks
+                    = repository.formatUsersTasks(data)
+            save(formattedUsersTasks)
+            emit(formattedUsersTasks)
         }
     }
 
-    fun getOngoingUsersTasks(): LiveData<List<TasksOrganizedModel>?> {
-        return liveData(Dispatchers.Default) {
-            emit(repository.ongoingUsersTasksList?.toList())
-        }
-    }
-
-    fun getCompletedUsersTasks(): LiveData<List<TasksOrganizedModel>?> {
-        return liveData(Dispatchers.Default) {
-            emit(repository.completedUsersTasksList?.toList())
+    private fun save(
+        formattedUsersTasks: Triple<MutableList<TasksOrganizedModel>, MutableList<TasksOrganizedModel>, MutableList<TasksOrganizedModel>>?
+    ) {
+        formattedUsersTasks?.let {
+            newUsersTasksList = listOf()
+            newUsersTasksList = it.first
+            ongoingUsersTasksList = listOf()
+            ongoingUsersTasksList = it.second
+            completedUsersTasksList = listOf()
+            completedUsersTasksList = it.third
         }
     }
 

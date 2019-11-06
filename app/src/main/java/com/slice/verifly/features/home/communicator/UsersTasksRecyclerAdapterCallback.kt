@@ -1,6 +1,6 @@
 package com.slice.verifly.features.home.communicator
 
-import com.slice.verifly.models.tasksorganized.TasksOrganizedModel
+import com.slice.verifly.features.home.models.TasksOrganizedModel
 
 interface UsersTasksRecyclerAdapterCallback {
 

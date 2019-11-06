@@ -10,7 +10,7 @@ import com.slice.verifly.base.BaseFragment
 import com.slice.verifly.features.home.communicator.UsersTasksRecyclerAdapterCallback
 import com.slice.verifly.features.home.adapter.UsersTasksRecyclerAdapter
 import com.slice.verifly.features.home.viewmodel.DashboardFragmentViewModel
-import com.slice.verifly.models.tasksorganized.TasksOrganizedModel
+import com.slice.verifly.features.home.models.TasksOrganizedModel
 import kotlinx.android.synthetic.main.fragment_users_tasks.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -40,17 +40,9 @@ class UsersTasksOngoingFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setUpObservers()
-    }
-
-    private fun setUpObservers() {
-        viewModel.getOngoingUsersTasks().observe(this, Observer { response ->
-            response?.let {
-                if (it.isNotEmpty()) {
-                    populateRecycler(it)
-                }
-            }
-        })
+        viewModel.ongoingUsersTasksList?.let {
+            populateRecycler(it)
+        }
     }
 
     // Operations

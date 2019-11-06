@@ -48,7 +48,7 @@ android {
             //ext.set("enableCrashlytics", false)
             signingConfig = signingConfigs.getByName("debug")
 
-            buildConfigField("String", "SERVER_URL", "\"http://api-feature.slicepay.in:9021/\"")
+            buildConfigField("String", "SERVER_URL", "\"https://api-feature.slicepay.in:9021/\"")
             buildConfigField("String", "URL", "\"ninjadev.slicepay.in/\"")
             buildConfigField("String", "WEB_URL", "\"https://dev.slicepay.in/\"")
             buildConfigField("String", "ENVIRONMENT", "\"dev\"")
@@ -64,7 +64,7 @@ android {
             //ext.set("enableCrashlytics", false)
             signingConfig = signingConfigs.getByName("debug")
 
-            buildConfigField("String", "SERVER_URL", "\"http://api-stage-feature.slicepay.in:9036/\"")
+            buildConfigField("String", "SERVER_URL", "\"https://api-stage-feature.slicepay.in:9036/\"")
             buildConfigField("String", "URL", "\"ninjatest.slicepay.in\"")
             buildConfigField("String", "WEB_URL", "\"https://test.slicepay.in/\"")
             buildConfigField("String", "ENVIRONMENT", "\"test\"")
@@ -78,7 +78,7 @@ android {
             isShrinkResources = !isDebuggable
             signingConfig = signingConfigs.getByName("release")
 
-            buildConfigField("String", "SERVER_URL", "\"http://api-beta.slicepay.in/\"")
+            buildConfigField("String", "SERVER_URL", "\"https://api-beta.slicepay.in/\"")
             buildConfigField("String", "URL", "\"ninja.slicepay.in\"")
             buildConfigField("String", "WEB_URL", "\"https://slicepay.in/\"")
             buildConfigField("String", "ENVIRONMENT", "\"prod\"")
@@ -98,7 +98,7 @@ android {
             isShrinkResources = !isDebuggable
             signingConfig = signingConfigs.getByName("release")
 
-            buildConfigField("String", "SERVER_URL", "\"http://api.slicepay.in/\"")
+            buildConfigField("String", "SERVER_URL", "\"https://api.slicepay.in/\"")
             buildConfigField("String", "URL", "\"ninja.slicepay.in\"")
             buildConfigField("String", "WEB_URL", "\"https://slicepay.in/\"")
             buildConfigField("String", "ENVIRONMENT", "\"prod\"")

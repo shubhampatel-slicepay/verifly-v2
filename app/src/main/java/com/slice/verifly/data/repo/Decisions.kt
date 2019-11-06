@@ -64,8 +64,8 @@ sealed class Decisions: KoinComponent {
      * Dumps data in order to make decisions (exposed)
      */
 
-    fun loginData(phoneNumber: String?, data: Data?) {
-        data?.userToken?.let { setUToken(it) }
+    fun loginData(phoneNumber: String?, userToken:String?, data: Data?) {
+        userToken?.let { setUToken(it) }
         data?.userid?.let { preferences.set(PreferencesKeys.USER_ID, it) }
         data?.name?.let { preferences.set(PreferencesKeys.USER_NAME, it) }
         phoneNumber?.let { preferences.set(PreferencesKeys.USER_PHONE_NUMBER, it) }

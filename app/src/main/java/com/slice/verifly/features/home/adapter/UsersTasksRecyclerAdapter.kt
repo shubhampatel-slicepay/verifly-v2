@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.slice.verifly.R
 import com.slice.verifly.features.home.communicator.UsersTasksRecyclerAdapterCallback
 import com.slice.verifly.models.tasks.TaskDocuments
-import com.slice.verifly.models.tasksorganized.TasksOrganizedModel
+import com.slice.verifly.features.home.models.TasksOrganizedModel
 import kotlinx.android.synthetic.main.item_user_task.view.*
 
 class UsersTasksRecyclerAdapter(
@@ -41,7 +41,7 @@ class UsersTasksRecyclerAdapter(
         private var adapter: TasksNamesRecyclerAdapter? = null
 
         fun bind(t: TasksOrganizedModel) {
-            if (t.taskDocs?.isNullOrEmpty() != true) {
+            if (t.taskDocs?.isNullOrEmpty() == false) {
                 val tasksList = t.taskDocs!!
 
                 // user image

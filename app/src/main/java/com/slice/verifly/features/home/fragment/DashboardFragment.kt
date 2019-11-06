@@ -12,7 +12,7 @@ import com.slice.verifly.features.home.communicator.HomeCommunicator
 import com.slice.verifly.features.home.enums.HomeTransaction
 import com.slice.verifly.features.home.viewmodel.DashboardFragmentViewModel
 import com.slice.verifly.features.home.enums.DashboardScreen
-import com.slice.verifly.models.tasksorganized.TasksOrganizedModel
+import com.slice.verifly.features.home.models.TasksOrganizedModel
 import com.slice.verifly.utility.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -81,6 +81,7 @@ class DashboardFragment: BaseFragment() {
             viewModel.getAssignedTasks().observe(this, Observer { response ->
                 response?.let {
                     if (it.isNotEmpty()) {
+                        viewModel.formatUsersTasks(it)
                         tv_dashboardBlank.visibility = View.GONE
                         cl_dashboardContents.visibility = View.VISIBLE
                         loadScreen(DashboardScreen.NEW)

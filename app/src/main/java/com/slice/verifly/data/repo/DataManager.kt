@@ -2,6 +2,7 @@ package com.slice.verifly.data.repo
 
 import com.google.gson.Gson
 import com.slice.verifly.base.ApiResponse
+import com.slice.verifly.data.local.db.AppDatabase
 import com.slice.verifly.data.local.pref.AppPreferences
 import com.slice.verifly.data.remote.Api
 import com.slice.verifly.models.loginrequest.LoginRequestModel
@@ -27,6 +28,7 @@ class DataManager : DataManagerHelper, KoinComponent {
      */
 
     private val api: Api by inject()
+    private val db: AppDatabase by inject()
     private val preferences: AppPreferences by inject()
     private val gson: Gson by inject()
     private val coroutineScope: CoroutineScope by inject()

@@ -12,7 +12,7 @@ import java.io.IOException
 
 object AuthInterceptor : Interceptor {
 
-    private val TAG = "AuthInterceptor"
+    private const val TAG = "AuthInterceptor"
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {

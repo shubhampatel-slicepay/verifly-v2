@@ -26,7 +26,7 @@ class ResetPasswordBottomSheet: BottomSheetDialogFragment() {
 
     companion object {
         fun newInstance() = ResetPasswordBottomSheet()
-        private val TAG = "ResetPasswordBottomSheet"
+        private const val TAG = "ResetPasswordBottomSheet"
         private val compositeDisposable = CompositeDisposable()
     }
 

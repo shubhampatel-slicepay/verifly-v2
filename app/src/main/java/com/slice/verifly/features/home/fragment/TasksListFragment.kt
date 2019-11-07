@@ -10,7 +10,7 @@ import com.slice.verifly.base.BaseFragment
 class TasksListFragment: BaseFragment() {
 
     companion object {
-        private val TAG = "TasksListFragment"
+        private const val TAG = "TasksListFragment"
     }
 
     override fun onCreateView(

@@ -18,7 +18,9 @@ import kotlinx.coroutines.Dispatchers
 
 class LoginFragmentViewModel(private val repository: LoginFragmentRepository) : BaseViewModel(), ErrorCommunicator {
 
-    private val TAG = "LoginFragmentViewModel"
+    companion object {
+        private const val TAG = "LoginFragmentViewModel"
+    }
 
     @SuppressLint("MissingPermission", "HardwareIds")
     fun logIn(

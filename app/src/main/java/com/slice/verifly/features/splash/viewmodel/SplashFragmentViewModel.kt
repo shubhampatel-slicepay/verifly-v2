@@ -22,6 +22,10 @@ class SplashFragmentViewModel(private val repository: SplashFragmentRepository) 
         }
     }
 
+    fun checkUserLoggedInStatus(): Boolean {
+         return repository.checkUserLoggedInStatus()
+    }
+
     override fun notifyOnError(errorMessage: String, nullify: Boolean?) {
         if (nullify == true) {
             errorLiveData.value = null

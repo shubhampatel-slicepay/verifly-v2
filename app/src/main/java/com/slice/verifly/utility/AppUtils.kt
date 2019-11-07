@@ -7,7 +7,7 @@ import java.util.*
 
 object AppUtils {
 
-    private val TAG = "AppUtils"
+    private const val TAG = "AppUtils"
 
     fun getDeviceName(): String {
         val manufacturer = Build.MANUFACTURER

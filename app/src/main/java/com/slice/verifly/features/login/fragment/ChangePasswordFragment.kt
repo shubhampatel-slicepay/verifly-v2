@@ -24,7 +24,7 @@ class ChangePasswordFragment: BaseFragment() {
 
     companion object {
         fun newInstance() = ChangePasswordFragment()
-        private val TAG = "ChangePasswordFragment"
+        private const val TAG = "ChangePasswordFragment"
     }
 
     // Components

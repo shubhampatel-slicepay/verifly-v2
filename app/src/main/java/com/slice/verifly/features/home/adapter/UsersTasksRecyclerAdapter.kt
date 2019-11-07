@@ -9,11 +9,11 @@ import com.bumptech.glide.Glide
 import com.slice.verifly.R
 import com.slice.verifly.features.home.communicator.UsersTasksRecyclerAdapterCallback
 import com.slice.verifly.models.tasks.TaskDocuments
-import com.slice.verifly.features.home.models.TasksOrganizedModel
+import com.slice.verifly.features.home.models.UsersTasksData
 import kotlinx.android.synthetic.main.item_user_task.view.*
 
 class UsersTasksRecyclerAdapter(
-    private val usersTasksList: List<TasksOrganizedModel?>,
+    private val data: List<UsersTasksData?>,
     private val listener: UsersTasksRecyclerAdapterCallback
 ): RecyclerView.Adapter<UsersTasksRecyclerAdapter.ViewHolder>() {
 
@@ -23,16 +23,16 @@ class UsersTasksRecyclerAdapter(
     }
 
     override fun getItemCount(): Int {
-        return usersTasksList.size
+        return data.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        usersTasksList[position]?.let { userTask ->
-            holder.bind(userTask)
+        data[position]?.let { task ->
+            holder.bind(task)
         }
 
         holder.itemView.cl_userTaskItemContainer.setOnClickListener {
-            listener.onUserTaskSelected(usersTasksList[position])
+            listener.onUserTaskSelected(data[position])
         }
     }
 
@@ -40,7 +40,7 @@ class UsersTasksRecyclerAdapter(
 
         private var adapter: TasksNamesRecyclerAdapter? = null
 
-        fun bind(t: TasksOrganizedModel) {
+        fun bind(t: UsersTasksData) {
             if (t.taskDocs?.isNullOrEmpty() == false) {
                 val tasksList = t.taskDocs!!
 
@@ -79,8 +79,7 @@ class UsersTasksRecyclerAdapter(
 
         private fun populateRecycler(tasksList: List<TaskDocuments>) {
             if (adapter == null) {
-                adapter =
-                    TasksNamesRecyclerAdapter(tasksList)
+                adapter = TasksNamesRecyclerAdapter(tasksList)
             }
             with(itemView.rv_tasksNamesList) {
                 layoutManager = LinearLayoutManager(itemView.context)

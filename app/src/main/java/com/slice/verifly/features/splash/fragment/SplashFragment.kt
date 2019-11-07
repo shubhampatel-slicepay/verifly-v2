@@ -18,7 +18,7 @@ class SplashFragment: BaseFragment() {
 
     companion object {
         fun newInstance() = SplashFragment()
-        private val TAG = "SplashFragment"
+        private const val TAG = "SplashFragment"
     }
 
     // Components
@@ -72,7 +72,8 @@ class SplashFragment: BaseFragment() {
                 response?.let {
                     if (it == Constants.SUCCESS_RESPONSE_STATUS) {
                         checkAppVersion()
-                        animateLogo()
+                        val status = viewModel.checkUserLoggedInStatus()
+                        animateLogo(status)
                     } else {
                         viewModel.notifyOnError(Constants.ERROR_TOAST_MESSAGE)
                     }
@@ -99,9 +100,9 @@ class SplashFragment: BaseFragment() {
 
     // View operation
 
-    private fun animateLogo() {
+    private fun animateLogo(status: Boolean) {
         Handler().postDelayed({
-            communicator?.onSplashAnimationFinished()
+            communicator?.onSplashAnimationFinished(status)
         }, 2000)
     }
 }

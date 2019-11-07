@@ -6,7 +6,7 @@ import android.content.SharedPreferences
 class AppPreferences(context: Context) {
 
     companion object {
-        private val TAG = "AppPreferences"
+        private const val TAG = "AppPreferences"
         private const val BACKED_UP_PREF = "Verifly.BACKED_UP_PREF"
         private const val NON_BACKED_UP_PREF = "Verifly.NON_BACKED_UP_PREF"
         const val NON_BACKED_UP_EDITOR_TYPE = "non_backed_up"
@@ -35,25 +35,25 @@ class AppPreferences(context: Context) {
         editor?.let {
             when (value) {
                 is Boolean -> {
-                    editor.putBoolean(key, value)
+                    it.putBoolean(key, value)
                 }
                 is Int -> {
-                    editor.putInt(key, value)
+                    it.putInt(key, value)
                 }
                 is Long -> {
-                    editor.putLong(key, value)
+                    it.putLong(key, value)
                 }
                 is Float -> {
-                    editor.putFloat(key, value)
+                    it.putFloat(key, value)
                 }
                 is Double -> {
-                    editor.putLong(key, java.lang.Double.doubleToRawLongBits(value))
+                    it.putLong(key, java.lang.Double.doubleToRawLongBits(value))
                 }
                 is String -> {
-                    editor.putString(key, value)
+                    it.putString(key, value)
                 }
                 else -> {
-
+                    return
                 }
             }
             return@let it.commit()

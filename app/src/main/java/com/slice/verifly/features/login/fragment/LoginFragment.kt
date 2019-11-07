@@ -24,7 +24,7 @@ class LoginFragment: BaseFragment() {
 
     companion object {
         fun newInstance() = LoginFragment()
-        private val TAG = "LoginFragment"
+        private const val TAG = "LoginFragment"
         val permissions = arrayOf(Manifest.permission.READ_PHONE_STATE)
     }
 

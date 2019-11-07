@@ -26,7 +26,6 @@ val viewModelInjectorModule = module {
     viewModel { ComponentBuilder.bindResetPasswordViewModel(get()) }
     viewModel { ComponentBuilder.bindChangePasswordViewModel(get()) }
     viewModel { ComponentBuilder.bindHomeActivityViewModel(get()) }
-    viewModel { ComponentBuilder.bindDashboardFragmentViewModel(get()) }
 }
 
 /**
@@ -38,5 +37,4 @@ val repositoryInjectorModule = module {
     single { ComponentBuilder.injectResetPasswordRepository(get()) }
     single { ComponentBuilder.injectChangePasswordRepository(get()) }
     single { ComponentBuilder.injectHomeActivityRepository(get()) }
-    single { ComponentBuilder.injectDashboardFragmentRepository(get()) }
 }

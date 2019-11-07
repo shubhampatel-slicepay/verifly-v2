@@ -7,8 +7,6 @@ import com.slice.verifly.features.splash.viewmodel.SplashFragmentViewModel
 import com.slice.verifly.data.repo.DataManagerHelper
 import com.slice.verifly.features.home.repository.HomeActivityRepository
 import com.slice.verifly.features.home.viewmodel.HomeActivityViewModel
-import com.slice.verifly.features.home.repository.DashboardFragmentRepository
-import com.slice.verifly.features.home.viewmodel.DashboardFragmentViewModel
 import com.slice.verifly.features.login.repository.ChangePasswordRepository
 import com.slice.verifly.features.login.viewmodel.ChangePasswordViewModel
 import com.slice.verifly.features.login.repository.ResetPasswordRepository
@@ -48,10 +46,6 @@ object ComponentBuilder {
         return HomeActivityViewModel(get)
     }
 
-    fun bindDashboardFragmentViewModel(get: DashboardFragmentRepository): DashboardFragmentViewModel {
-        return DashboardFragmentViewModel(get)
-    }
-
     /**
      * Implementations for Repository Injectors
      */
@@ -69,7 +63,4 @@ object ComponentBuilder {
 
     fun injectHomeActivityRepository(get: DataManagerHelper) =
         HomeActivityRepository(get)
-
-    fun injectDashboardFragmentRepository(get: DataManagerHelper) =
-        DashboardFragmentRepository(get)
 }

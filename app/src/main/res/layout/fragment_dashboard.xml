@@ -85,6 +85,14 @@
             android:text="@string/dashboard_blank_message"
             android:textSize="@dimen/text_normal"
             android:textColor="@color/pale_red"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
+    <ProgressBar
+            android:id="@+id/pb_dashboard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone"
+            tools:visibility="visible" />
 </FrameLayout>

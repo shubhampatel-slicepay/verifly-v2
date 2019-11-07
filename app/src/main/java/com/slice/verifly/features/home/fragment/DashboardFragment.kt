@@ -9,10 +9,9 @@ import androidx.lifecycle.Observer
 import com.slice.verifly.R
 import com.slice.verifly.base.BaseFragment
 import com.slice.verifly.features.home.communicator.HomeCommunicator
-import com.slice.verifly.features.home.enums.HomeTransaction
-import com.slice.verifly.features.home.viewmodel.DashboardFragmentViewModel
 import com.slice.verifly.features.home.enums.DashboardScreen
-import com.slice.verifly.features.home.models.TasksOrganizedModel
+import com.slice.verifly.features.home.viewmodel.HomeActivityViewModel
+import com.slice.verifly.models.tasks.Task
 import com.slice.verifly.utility.*
 import kotlinx.android.synthetic.main.fragment_dashboard.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -21,12 +20,12 @@ class DashboardFragment: BaseFragment() {
 
     companion object {
         fun newInstance() = DashboardFragment()
-        private val TAG = "DashboardFragment"
+        private const val TAG = "DashboardFragment"
     }
 
     // Components
 
-    private val viewModel: DashboardFragmentViewModel by viewModel()
+    private val viewModel: HomeActivityViewModel by viewModel()
 
     // Properties
 
@@ -78,13 +77,11 @@ class DashboardFragment: BaseFragment() {
 
     private fun getAssignedTasks() {
         if (activity?.isNetworkConnected == true) {
+            pb_dashboard.visibility = View.VISIBLE
             viewModel.getAssignedTasks().observe(this, Observer { response ->
                 response?.let {
                     if (it.isNotEmpty()) {
-                        viewModel.formatUsersTasks(it)
-                        tv_dashboardBlank.visibility = View.GONE
-                        cl_dashboardContents.visibility = View.VISIBLE
-                        loadScreen(DashboardScreen.NEW)
+                        formatUsersTasks(it)
                     } else {
                         fl_dashboardRootContainer.snack(Constants.ERROR_FETCHING_DATA_MESSAGE).show()
                         cl_dashboardContents.visibility = View.GONE
@@ -95,6 +92,16 @@ class DashboardFragment: BaseFragment() {
         } else {
             viewModel.noInternet()
         }
+    }
+
+    private fun formatUsersTasks(data: List<Task?>) {
+        viewModel.formatUsersTasks(data).observe(this, Observer { response ->
+            response?.let {
+                tv_dashboardBlank.visibility = View.GONE
+                cl_dashboardContents.visibility = View.VISIBLE
+                loadScreen(DashboardScreen.NEW)
+            }
+        })
     }
 
     // Operations
@@ -116,14 +123,5 @@ class DashboardFragment: BaseFragment() {
             }
             screenId == dashboardScreen.ordinal
         }
-    }
-
-    // Communicator & Callbacks
-
-    fun onUserTaskSelected(userTask: TasksOrganizedModel) {
-        val bundle = Bundle().apply {
-            putParcelable(Constants.USER_TASK_SELECTED, userTask)
-        }
-        communicator?.transact(HomeTransaction.DASHBOARD_TO_TASKSLIST, bundle)
     }
 }

@@ -14,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseFragment : Fragment() {
 
-    private val TAG = "BaseFragment"
+    private val const TAG = "BaseFragment"
     val compositeDisposable by lazy { CompositeDisposable() }
 
     protected fun askRunTimePermissions(vararg permissions: String, requestCode: Int) {

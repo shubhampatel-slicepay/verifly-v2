@@ -1,16 +1,20 @@
 package com.slice.verifly.features.home.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.slice.verifly.R
 import com.slice.verifly.base.BaseFragment
 import com.slice.verifly.features.home.communicator.UsersTasksRecyclerAdapterCallback
 import com.slice.verifly.features.home.adapter.UsersTasksRecyclerAdapter
-import com.slice.verifly.features.home.viewmodel.DashboardFragmentViewModel
-import com.slice.verifly.features.home.models.TasksOrganizedModel
+import com.slice.verifly.features.home.communicator.HomeCommunicator
+import com.slice.verifly.features.home.enums.HomeTransaction
+import com.slice.verifly.features.home.models.UsersTasksData
+import com.slice.verifly.features.home.viewmodel.HomeActivityViewModel
+import com.slice.verifly.utility.Constants
 import kotlinx.android.synthetic.main.fragment_users_tasks.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -18,17 +22,23 @@ class UsersTasksOngoingFragment: BaseFragment(),
     UsersTasksRecyclerAdapterCallback {
 
     companion object {
-        private val TAG = "UsersTasksOngoingFragment"
+        private const val TAG = "UsersTasksOngoingFragment"
         fun newInstance() = UsersTasksOngoingFragment()
     }
 
     // Components
 
-    private val viewModel: DashboardFragmentViewModel by viewModel()
+    private val viewModel: HomeActivityViewModel by viewModel()
 
     // Properties
 
+    private var communicator: HomeCommunicator? = null
     private var adapter: UsersTasksRecyclerAdapter? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is HomeCommunicator) communicator = context
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,36 +50,33 @@ class UsersTasksOngoingFragment: BaseFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.ongoingUsersTasksList?.let {
-            populateRecycler(it)
-        }
+        getData()
     }
 
     // Operations
 
-    private fun populateRecycler(data: List<TasksOrganizedModel>) {
+    private fun getData() {
+        viewModel.assignedTasksData?.ongoingTasks?.let {
+            populateRecycler(it)
+        }
+    }
+
+    private fun populateRecycler(data: List<UsersTasksData>) {
         if (adapter == null) {
-            adapter =
-                UsersTasksRecyclerAdapter(
-                    data,
-                    this
-                )
+            adapter = UsersTasksRecyclerAdapter(data, this)
         }
         with(rv_usersTasksList) {
-            layoutManager = androidx.recyclerview.widget.LinearLayoutManager(activity)
+            layoutManager = LinearLayoutManager(activity)
             adapter = this@UsersTasksOngoingFragment.adapter
         }
     }
 
     // Adapter callbacks
 
-    override fun onUserTaskSelected(task: TasksOrganizedModel?) {
-        parentFragment?.let { fragment ->
-            if (fragment is DashboardFragment) {
-                task?.let { userTask ->
-                    (parentFragment as DashboardFragment).onUserTaskSelected(userTask)
-                }
-            }
+    override fun onUserTaskSelected(task: UsersTasksData?) {
+        val bundle = Bundle().apply {
+            putParcelable(Constants.USER_TASK_SELECTED, task)
         }
+        communicator?.transact(HomeTransaction.DASHBOARD_TO_TASKSLIST, bundle)
     }
 }

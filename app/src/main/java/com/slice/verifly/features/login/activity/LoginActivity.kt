@@ -18,7 +18,7 @@ class LoginActivity : AppCompatActivity(),
     ResetPasswordCallback {
 
     companion object {
-        private val TAG = "LoginActivity"
+        private const val TAG = "LoginActivity"
     }
 
     // Properties
@@ -41,6 +41,14 @@ class LoginActivity : AppCompatActivity(),
         replaceFragment(ChangePasswordFragment.newInstance(), rl_login.id, addToStack = true)
     }
 
+    private fun lunchHomeActivity() {
+        val intent = Intent(this, HomeActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
+        overridePendingTransition(0, 0)
+        finish()
+    }
+
     // Communicator & Callbacks
 
     override fun showResetPasswordScreen() {
@@ -56,15 +64,11 @@ class LoginActivity : AppCompatActivity(),
     }
 
     override fun onSuccessfullyLoggedIn() {
-        val intent = Intent(this, HomeActivity::class.java)
-            .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK and Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
-        overridePendingTransition(0, 0)
-        finish()
+        lunchHomeActivity()
     }
 
     override fun onPasswordChanged() {
-        onBackPressed()
+        this.onBackPressed()
     }
 
     override fun onOtpVerified() {

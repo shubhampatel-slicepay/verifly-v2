@@ -25,4 +25,8 @@ class SplashFragmentRepository(private val dataManagerHelper: DataManagerHelper)
             it == BuildConfig.VERSION_CODE.toString()
         } ?: false
     }
+
+    fun checkUserLoggedInStatus(): Boolean {
+        return manager.getUserLoggedInStatus()
+    }
 }

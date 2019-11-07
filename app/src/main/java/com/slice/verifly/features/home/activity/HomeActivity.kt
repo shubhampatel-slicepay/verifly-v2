@@ -17,7 +17,7 @@ class HomeActivity : AppCompatActivity(),
     HomeCommunicator {
 
     companion object {
-        private val TAG = "HomeActivity"
+        private const val TAG = "HomeActivity"
     }
 
     // Components
@@ -54,6 +54,6 @@ class HomeActivity : AppCompatActivity(),
     override fun setUpToolbar(title: String, showNavIcon: Boolean, showExpandBtn: Boolean) {
         toolbarTitle.text = title
         toolbarNavIcon.visibility = if(showNavIcon) View.VISIBLE else View.INVISIBLE
-        toolbarExpandBtn.visibility = if(showExpandBtn) View.VISIBLE else View.GONE
+        toolbarExpandBtn.visibility = if(showExpandBtn) View.VISIBLE else View.INVISIBLE
     }
 }

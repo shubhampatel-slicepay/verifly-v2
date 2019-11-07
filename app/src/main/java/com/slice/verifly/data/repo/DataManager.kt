@@ -19,7 +19,7 @@ import org.koin.core.inject
 class DataManager : DataManagerHelper, KoinComponent {
 
     companion object {
-        private val TAG = "DataManager"
+        private const val TAG = "DataManager"
         private const val EXCEPTION = "Exception : "
     }
 

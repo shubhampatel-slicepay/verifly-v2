@@ -1,5 +1,7 @@
 package com.slice.verifly.di
 
+import android.app.Application
+import android.content.Context
 import com.google.gson.Gson
 import com.slice.verifly.data.local.db.AppDatabase
 import com.slice.verifly.data.local.pref.AppPreferences
@@ -8,6 +10,7 @@ import com.slice.verifly.data.repo.DataManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 import kotlin.coroutines.CoroutineContext
@@ -27,6 +30,7 @@ val appModule = module {
     single { provideGson() }
     single { provideDataManager() }
     factory { provideCoroutineScope() }
+    factory { provideAppContext(androidApplication()) }
 }
 
 fun provideGson(): Gson {
@@ -44,4 +48,8 @@ fun provideCoroutineScope(): CoroutineScope {
     val coroutineContext: CoroutineContext = job + Dispatchers.Default
     //create a coroutine scope with the coroutine context
     return CoroutineScope(coroutineContext)
+}
+
+fun provideAppContext(androidApplication: Application): Context? {
+    return androidApplication.applicationContext
 }

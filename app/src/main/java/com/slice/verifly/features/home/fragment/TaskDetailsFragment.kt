@@ -5,7 +5,7 @@ import com.slice.verifly.base.BaseFragment
 class TaskDetailsFragment: BaseFragment() {
 
     companion object {
-        private val TAG = "TaskDetailsFragment"
+        private const val TAG = "TaskDetailsFragment"
         fun newInstance() = TaskDetailsFragment()
     }
 }

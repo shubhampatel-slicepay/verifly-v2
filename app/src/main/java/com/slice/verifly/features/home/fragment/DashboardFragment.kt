@@ -77,16 +77,19 @@ class DashboardFragment: BaseFragment() {
 
     private fun getAssignedTasks() {
         if (activity?.isNetworkConnected == true) {
-            pb_dashboard.visibility = View.VISIBLE
+            communicator?.showLoading()
             viewModel.getAssignedTasks().observe(this, Observer { response ->
                 response?.let {
                     if (it.isNotEmpty()) {
                         formatUsersTasks(it)
                     } else {
-                        fl_dashboardRootContainer.snack(Constants.ERROR_FETCHING_DATA_MESSAGE).show()
-                        cl_dashboardContents.visibility = View.GONE
-                        tv_dashboardBlank.visibility = View.VISIBLE
+                        loadScreen(DashboardScreen.NEW)
                     }
+                } ?: kotlin.run {
+                    communicator?.hideLoading()
+                    cl_dashboardRootContainer.snack(Constants.ERROR_FETCHING_DATA_MESSAGE).show()
+                    ll_usersTasksFragmentContainer.visibility = View.GONE
+                    tv_dashboardError.visibility = View.VISIBLE
                 }
             })
         } else {
@@ -97,8 +100,9 @@ class DashboardFragment: BaseFragment() {
     private fun formatUsersTasks(data: List<Task?>) {
         viewModel.formatUsersTasks(data).observe(this, Observer { response ->
             response?.let {
-                tv_dashboardBlank.visibility = View.GONE
-                cl_dashboardContents.visibility = View.VISIBLE
+                communicator?.hideLoading()
+                tv_dashboardError.visibility = View.GONE
+                ll_usersTasksFragmentContainer.visibility = View.VISIBLE
                 loadScreen(DashboardScreen.NEW)
             }
         })
@@ -110,18 +114,58 @@ class DashboardFragment: BaseFragment() {
         if (screenId != dashboardScreen.ordinal) {
             when(dashboardScreen) {
                 DashboardScreen.NEW -> {
-                    replaceFragment(UsersTasksNewFragment.newInstance(), ll_statusFragmentContainer.id, false)
+                    highlightButton(newStatusButton = true)
+                    replaceFragment(
+                        UsersTasksNewFragment.newInstance(),
+                        ll_usersTasksFragmentContainer.id,
+                        addToStack = false
+                    )
                 }
 
                 DashboardScreen.ONGOING -> {
-                    replaceFragment(UsersTasksOngoingFragment.newInstance(), ll_statusFragmentContainer.id, false)
+                    highlightButton(ongoingStatusButton = true)
+                    replaceFragment(
+                        UsersTasksOngoingFragment.newInstance(),
+                        ll_usersTasksFragmentContainer.id,
+                        addToStack = false
+                    )
                 }
 
                 DashboardScreen.COMPLETED -> {
-                    replaceFragment(UsersTasksCompletedFragment.newInstance(), ll_statusFragmentContainer.id, false)
+                    highlightButton(completedStatusButton = true)
+                    replaceFragment(
+                        UsersTasksCompletedFragment.newInstance(),
+                        ll_usersTasksFragmentContainer.id,
+                        addToStack = false
+                    )
                 }
             }
-            screenId == dashboardScreen.ordinal
+            screenId = dashboardScreen.ordinal
+        }
+    }
+
+    // Utility methods
+    private fun highlightButton(
+        newStatusButton: Boolean = false,
+        ongoingStatusButton: Boolean = false,
+        completedStatusButton: Boolean = false
+    ) {
+        if (newStatusButton) {
+            tv_newStatus.setBackgroundResource(R.drawable.bg_textview_enabled)
+        } else {
+            tv_newStatus.setBackgroundResource(R.drawable.bg_textview_disabled)
+        }
+
+        if (ongoingStatusButton) {
+            tv_ongoingStatus.setBackgroundResource(R.drawable.bg_textview_enabled)
+        } else {
+            tv_ongoingStatus.setBackgroundResource(R.drawable.bg_textview_disabled)
+        }
+
+        if (completedStatusButton) {
+            tv_completedStatus.setBackgroundResource(R.drawable.bg_textview_enabled)
+        } else {
+            tv_completedStatus.setBackgroundResource(R.drawable.bg_textview_disabled)
         }
     }
 }

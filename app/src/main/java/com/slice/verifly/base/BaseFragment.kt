@@ -14,8 +14,16 @@ import io.reactivex.disposables.CompositeDisposable
 
 abstract class BaseFragment : Fragment() {
 
-    private val const TAG = "BaseFragment"
+    companion object {
+        private const val TAG = "BaseFragment"
+    }
+
     val compositeDisposable by lazy { CompositeDisposable() }
+
+    override fun onDetach() {
+        compositeDisposable.dispose()
+        super.onDetach()
+    }
 
     protected fun askRunTimePermissions(vararg permissions: String, requestCode: Int) {
         askPermission(permissions = *permissions, requestCode = requestCode)
@@ -66,10 +74,5 @@ abstract class BaseFragment : Fragment() {
 
     open fun onReadPhoneStatePermission() {
         SlicePayLog.info(TAG, "onReadPhoneStatePermission")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        compositeDisposable.dispose()
     }
 }

@@ -102,7 +102,7 @@ class ResetPasswordBottomSheet: BottomSheetDialogFragment() {
                             activity?.toast("OTP sent successfully.")
                             initResetPasswordOtp()
                         } else {
-                            viewModel.notifyOnError(Constants.RETRY_TOAST_MESSAGE)
+                            viewModel.notifyError(Constants.RETRY_TOAST_MESSAGE)
                         }
                     }
                 })
@@ -120,7 +120,7 @@ class ResetPasswordBottomSheet: BottomSheetDialogFragment() {
                         if (it == Constants.SUCCESS_RESPONSE_STATUS) {
                             callback?.onOtpVerified()
                         } else {
-                            viewModel.notifyOnError(Constants.ERROR_TOAST_MESSAGE)
+                            viewModel.notifyError(Constants.ERROR_TOAST_MESSAGE)
                             initResetPasswordStatus()
                         }
                     }

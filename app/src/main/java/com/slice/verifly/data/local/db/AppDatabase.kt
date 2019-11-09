@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.slice.verifly.data.local.db.dao.TasksDao
+import com.slice.verifly.data.local.db.entity.TasksEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [], version = 1)
+@Database(entities = [TasksEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     // Define all the DAO here

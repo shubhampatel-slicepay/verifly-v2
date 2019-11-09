@@ -64,7 +64,8 @@ android {
             //ext.set("enableCrashlytics", false)
             signingConfig = signingConfigs.getByName("debug")
 
-            buildConfigField("String", "SERVER_URL", "\"https://api-stage-feature.slicepay.in:9036/\"")
+            //buildConfigField("String", "SERVER_URL", "\"https://api-stage-feature.slicepay.in:9036/\"")
+            buildConfigField("String", "SERVER_URL", "\"https://34.93.170.28:80/\"")
             buildConfigField("String", "URL", "\"ninjatest.slicepay.in\"")
             buildConfigField("String", "WEB_URL", "\"https://test.slicepay.in/\"")
             buildConfigField("String", "ENVIRONMENT", "\"test\"")

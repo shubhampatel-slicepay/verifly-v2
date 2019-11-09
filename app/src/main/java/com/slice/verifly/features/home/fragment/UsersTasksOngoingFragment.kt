@@ -57,7 +57,13 @@ class UsersTasksOngoingFragment: BaseFragment(),
 
     private fun getData() {
         viewModel.assignedTasksData?.ongoingTasks?.let {
+            rv_usersTasksList.visibility = View.VISIBLE
+            tv_usersTasksBlankText.visibility = View.GONE
             populateRecycler(it)
+        } ?: kotlin.run {
+            rv_usersTasksList.visibility = View.GONE
+            tv_usersTasksBlankText.visibility = View.VISIBLE
+            tv_usersTasksBlankText.text = Constants.NO_ONGOING_TASKS_MESSAGE
         }
     }
 

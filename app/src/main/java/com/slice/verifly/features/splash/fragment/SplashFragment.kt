@@ -75,7 +75,7 @@ class SplashFragment: BaseFragment() {
                         val status = viewModel.checkUserLoggedInStatus()
                         animateLogo(status)
                     } else {
-                        viewModel.notifyOnError(Constants.ERROR_TOAST_MESSAGE)
+                        viewModel.notifyError(Constants.ERROR_TOAST_MESSAGE)
                     }
                 }
             })

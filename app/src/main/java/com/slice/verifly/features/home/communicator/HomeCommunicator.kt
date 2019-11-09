@@ -8,4 +8,8 @@ interface HomeCommunicator {
     fun setUpToolbar(title: String, showNavIcon: Boolean, showExpandBtn: Boolean)
 
     fun transact(navigationAction: HomeTransaction, bundle: Bundle? = null)
+
+    fun showLoading()
+
+    fun hideLoading()
 }

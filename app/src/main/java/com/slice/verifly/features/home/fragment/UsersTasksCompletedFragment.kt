@@ -35,17 +35,17 @@ class UsersTasksCompletedFragment: BaseFragment(),
     private var communicator: HomeCommunicator? = null
     private var adapter: UsersTasksRecyclerAdapter? = null
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is HomeCommunicator) communicator = context
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_users_tasks, container, false)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is HomeCommunicator) communicator = context
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +57,13 @@ class UsersTasksCompletedFragment: BaseFragment(),
 
     private fun getData() {
         viewModel.assignedTasksData?.completedTasks?.let {
+            rv_usersTasksList.visibility = View.VISIBLE
+            tv_usersTasksBlankText.visibility = View.GONE
             populateRecycler(it)
+        } ?: kotlin.run {
+            rv_usersTasksList.visibility = View.GONE
+            tv_usersTasksBlankText.visibility = View.VISIBLE
+            tv_usersTasksBlankText.text = Constants.NO_COMPLETED_TASKS_MESSAGE
         }
     }
 

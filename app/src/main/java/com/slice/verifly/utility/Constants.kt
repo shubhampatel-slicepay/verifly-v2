@@ -25,6 +25,9 @@ object Constants {
     const val NO_INTERNET_MESSAGE = "No internet connection."
     const val UPDATE_MESSAGE = "It seems you're using an old version. Please update to the new version."
     const val ERROR_FETCHING_DATA_MESSAGE = "Sorry! Unable to fetch data. Please try again later."
+    const val NO_NEW_TASKS_MESSAGE = "No new tasks assigned."
+    const val NO_ONGOING_TASKS_MESSAGE = "No ongoing tasks pending."
+    const val NO_COMPLETED_TASKS_MESSAGE = "No completed tasks."
 
     // permission requests
 

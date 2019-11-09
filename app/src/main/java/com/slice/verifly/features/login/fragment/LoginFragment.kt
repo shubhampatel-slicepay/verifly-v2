@@ -135,7 +135,7 @@ class LoginFragment: BaseFragment() {
                         cl_loginRootContainer.snack("Logged in successfully.").show()
                         communicator?.onSuccessfullyLoggedIn()
                     } else {
-                        viewModel.notifyOnError(Constants.RETRY_TOAST_MESSAGE)
+                        viewModel.notifyError(Constants.RETRY_TOAST_MESSAGE)
                     }
                 }
             })

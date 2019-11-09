@@ -110,7 +110,7 @@ class ChangePasswordFragment: BaseFragment() {
                         cl_changePasswordRootContainer.snack("Password was reset successfully.").show()
                         communicator?.onPasswordChanged()
                     } else {
-                        viewModel.notifyOnError(Constants.RETRY_TOAST_MESSAGE)
+                        viewModel.notifyError(Constants.RETRY_TOAST_MESSAGE)
                     }
                 }
             })

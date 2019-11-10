@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
+<androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cl_tasksListRootContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rv_tasksList" />
+        android:background="@color/white">
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_tasksList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_small1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

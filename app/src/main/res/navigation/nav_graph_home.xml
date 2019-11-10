@@ -14,7 +14,12 @@
                 android:id="@+id/action_dashboardFragment_to_tasksListFragment"
                 app:destination="@id/tasksListFragment"
                 app:popUpTo="@id/dashboardFragment"
-                app:popUpToInclusive="false" />
+                app:popUpToInclusive="false">
+            <argument
+                    android:name="user-task"
+                    app:argType="com.slice.verifly.features.home.models.UsersTasksData"
+                    app:nullable="true" />
+        </action>
     </fragment>
 
     <fragment
@@ -22,15 +27,30 @@
             android:name="com.slice.verifly.features.home.fragment.TasksListFragment"
             android:label="TasksListFragment"
             tools:layout="@layout/fragment_tasks_list">
+        <argument
+                android:name="user-task"
+                app:argType="com.slice.verifly.features.home.models.UsersTasksData"
+                app:nullable="true" />
         <action
-                android:id="@+id/action_tasksListFragment_to_taskDetailsFragment"
-                app:destination="@id/taskDetailsFragment"
+                android:id="@+id/action_tasksListFragment_to_taskFormDetailsDialogFragment"
+                app:destination="@id/taskFormDetailsDialogFragment"
                 app:popUpTo="@id/tasksListFragment"
-                app:popUpToInclusive="false" />
+                app:popUpToInclusive="false">
+            <argument
+                    android:name="task"
+                    app:argType="com.slice.verifly.models.tasks.TaskDocuments"
+                    app:nullable="true" />
+        </action>
     </fragment>
 
-    <fragment
-            android:id="@+id/taskDetailsFragment"
-            android:name="com.slice.verifly.features.home.fragment.TaskDetailsFragment"
-            android:label="TaskDetailsFragment" />
+    <dialog
+            android:id="@+id/taskFormDetailsDialogFragment"
+            android:name="com.slice.verifly.features.home.fragment.TaskFormDetailsDialogFragment"
+            android:label="TaskFormDetailsDialogFragment"
+            tools:layout="@layout/dialog_fragment_task_form_details">
+        <argument
+                android:name="task"
+                app:argType="com.slice.verifly.models.tasks.TaskDocuments"
+                app:nullable="true" />
+    </dialog>
 </navigation>

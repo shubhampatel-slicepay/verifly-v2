@@ -4,5 +4,5 @@ import com.slice.verifly.features.home.models.UsersTasksData
 
 interface UsersTasksRecyclerAdapterCallback {
 
-    fun onUserTaskSelected(task: UsersTasksData?)
+    fun onUserTaskSelected(userTask: UsersTasksData?)
 }

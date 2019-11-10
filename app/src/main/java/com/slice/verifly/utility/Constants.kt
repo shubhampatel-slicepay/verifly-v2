@@ -29,11 +29,17 @@ object Constants {
     const val NO_ONGOING_TASKS_MESSAGE = "No ongoing tasks pending."
     const val NO_COMPLETED_TASKS_MESSAGE = "No completed tasks."
 
-    // permission requests
+    // permission requests -> starts from 101
 
     const val READ_PHONE_STATE_PER_REQ_CODE = 101
 
-    // view requests
+    // view requests -> starts from 201
+
+    const val TASK_FORM_DETAILS_DIALOG_REQ = 201
+
+    // keys used for saving state
+
+    const val NOTIFY_ADAPTER_STATUS_KEY = "notify-adapter-status"
 
     // Parcel keys
 

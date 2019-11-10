@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -21,6 +23,7 @@ android {
         versionName = "2.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
+        vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
         getByName("debug") {
@@ -38,6 +41,12 @@ android {
             keyPassword = "meshapp1234"
             storePassword = "meshapp1234"
         }
+    }
+    tasks.withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "12"
+    }
+    dataBinding {
+        isEnabled = true
     }
     buildTypes {
         getByName("debug") {

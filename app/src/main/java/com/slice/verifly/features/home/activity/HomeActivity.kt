@@ -2,10 +2,13 @@ package com.slice.verifly.features.home.activity
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import com.slice.verifly.R
+import com.slice.verifly.customview.LoadingView
 import com.slice.verifly.features.home.viewmodel.HomeActivityViewModel
 import com.slice.verifly.features.home.communicator.HomeCommunicator
 import com.slice.verifly.features.home.enums.HomeTransaction
@@ -26,6 +29,12 @@ class HomeActivity : AppCompatActivity(),
 
     private val viewModel: HomeActivityViewModel by viewModel()
     private lateinit var navController: NavController
+
+    // Properties
+
+    private var loadingView: LoadingView? = null
+
+    // Lifecycle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +58,20 @@ class HomeActivity : AppCompatActivity(),
 
     // Communicator & Callbacks
 
-    override fun transact(navigationAction: HomeTransaction, bundle: Bundle?) {
-        navController.navigate(navigationAction.actionID, bundle)
+    override fun transact(navDirections: NavDirections) {
+        navController.navigate(navDirections)
+    }
+
+    override fun transact(@IdRes actionId: Int, bundle: Bundle?) {
+        navController.navigate(actionId, bundle)
+    }
+
+    override fun transact(homeTransaction: HomeTransaction, bundle: Bundle?) {
+        navController.navigate(homeTransaction.actionID, bundle)
+    }
+
+    override fun back() {
+        navController.navigateUp()
     }
 
     override fun setUpToolbar(title: String, showNavIcon: Boolean, showExpandBtn: Boolean) {
@@ -61,13 +82,18 @@ class HomeActivity : AppCompatActivity(),
 
     override fun showLoading() {
         rl_homeRootContainer.alpha = .5f
-        pb_loading.visibility = View.VISIBLE
+        loadingView = LoadingView(this)
+        loadingView?.showLoading() ?: kotlin.run {
+            pb_loading.visibility = View.VISIBLE
+        }
         disableScreen()
     }
 
     override fun hideLoading() {
         enableScreen()
-        pb_loading.visibility = View.VISIBLE
+        loadingView?.hideLoading() ?: kotlin.run {
+            pb_loading.visibility = View.GONE
+        }
         rl_homeRootContainer.alpha = 1f
     }
 }

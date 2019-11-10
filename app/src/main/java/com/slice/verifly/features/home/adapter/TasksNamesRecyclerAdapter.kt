@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.slice.verifly.R
 import com.slice.verifly.models.tasks.TaskDocuments
@@ -30,22 +31,31 @@ class TasksNamesRecyclerAdapter(
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         fun bind(task: TaskDocuments) {
-            val image: Drawable
+            var drawable: Drawable? = null
             when (task.taskStatus) {
                 Constants.NEW_STATUS -> {
-                    image = itemView.iv_taskStatus.context.resources.getDrawable(R.drawable.ic_new_status)
-                    itemView.iv_taskStatus.setImageDrawable(image)
+                    drawable = ContextCompat.getDrawable(
+                        itemView.iv_taskStatus.context,
+                        R.drawable.ic_outlined_new_status
+                    )
                 }
 
                 Constants.ONGOING_STATUS -> {
-                    image = itemView.iv_taskStatus.context.resources.getDrawable(R.drawable.ic_ongoing_status)
-                    itemView.iv_taskStatus.setImageDrawable(image)
+                    drawable = ContextCompat.getDrawable(
+                        itemView.iv_taskStatus.context,
+                        R.drawable.ic_outlined_ongoing_status
+                    )
                 }
 
                 Constants.COMPLETED_STATUS -> {
-                    image = itemView.iv_taskStatus.context.resources.getDrawable(R.drawable.ic_completed_status)
-                    itemView.iv_taskStatus.setImageDrawable(image)
+                    drawable = ContextCompat.getDrawable(
+                        itemView.iv_taskStatus.context,
+                        R.drawable.ic_outlined_completed_status
+                    )
                 }
+            }
+            drawable?.let {
+                itemView.iv_taskStatus.setImageDrawable(it)
             }
             itemView.tv_taskName.text = task.taskName
         }

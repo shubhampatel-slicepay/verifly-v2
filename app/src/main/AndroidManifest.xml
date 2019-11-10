@@ -50,6 +50,7 @@
 
         <!-- Define meta data here -->
 
-        <meta-data android:name="CLOUDINARY_URL" android:value="mesh://541578479444757@1ITDPajCmIcYn2UBlE-kbwHkr5A" />
+        <meta-data android:name="CLOUDINARY_URL"
+                android:value="mesh://541578479444757@1ITDPajCmIcYn2UBlE-kbwHkr5A" />
     </application>
 </manifest>

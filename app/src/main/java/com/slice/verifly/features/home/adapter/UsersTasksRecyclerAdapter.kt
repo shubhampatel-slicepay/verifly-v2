@@ -13,9 +13,15 @@ import com.slice.verifly.features.home.models.UsersTasksData
 import kotlinx.android.synthetic.main.item_user_task.view.*
 
 class UsersTasksRecyclerAdapter(
-    private val data: List<UsersTasksData?>,
+    data: List<UsersTasksData?>,
     private val listener: UsersTasksRecyclerAdapterCallback
 ): RecyclerView.Adapter<UsersTasksRecyclerAdapter.ViewHolder>() {
+
+    // Properties
+
+    private var data = data.toMutableList()
+
+    // Implementations
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_user_task, parent, false)
@@ -36,7 +42,9 @@ class UsersTasksRecyclerAdapter(
         }
     }
 
-    class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    // ViewHolder
+
+    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
         private var adapter: TasksNamesRecyclerAdapter? = null
 
@@ -48,7 +56,7 @@ class UsersTasksRecyclerAdapter(
                 val userImage = tasksList[0].userSelfie
                 userImage?.let {
                     Glide.with(itemView.civ_userImage.context).load(it).into(itemView.civ_userImage)
-                } ?: run {
+                } ?: kotlin.run {
                     val image = itemView.civ_userImage.context.resources.getDrawable(R.drawable.ic_account_circle)
                     itemView.civ_userImage.setImageDrawable(image)
                 }
@@ -57,7 +65,7 @@ class UsersTasksRecyclerAdapter(
                 val userName = tasksList[0].userName
                 userName?.let {
                     itemView.tv_userName.text = it
-                } ?: run {
+                } ?: kotlin.run {
                     itemView.tv_userName.text = "--"
                 }
 
@@ -65,7 +73,7 @@ class UsersTasksRecyclerAdapter(
                 val userCollege = tasksList[0].userCollege
                 userName?.let {
                     itemView.tv_userCollege.text = it
-                } ?: run {
+                } ?: kotlin.run {
                     itemView.tv_userCollege.text = "--"
                 }
 
@@ -86,5 +94,13 @@ class UsersTasksRecyclerAdapter(
                 adapter = this@ViewHolder.adapter
             }
         }
+    }
+
+    // Communications
+
+    fun notifyDataChanged(newData: List<UsersTasksData?>) {
+        this.data.clear()
+        this.data = newData.toMutableList()
+        notifyDataSetChanged()
     }
 }

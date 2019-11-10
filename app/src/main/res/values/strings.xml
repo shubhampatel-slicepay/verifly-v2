@@ -33,4 +33,44 @@
     <string name="dashboard_new_status">New</string>
     <string name="dashboard_ongoing_status">Ongoing</string>
     <string name="dashboard_completed_status">Completed</string>
+
+    <!-- TasksList -->
+    <string name="task_new_status">Pending</string>
+    <string name="task_ongoing_status">Incomplete</string>
+    <string name="task_completed_status">Submitted</string>
+
+    <!-- TaskDetails -> OSV -->
+    <string name="physical_osv_name">NAME</string>
+    <string name="physical_osv_current_address">CURRENT ADDRESS</string>
+    <string name="physical_osv_phone_number">PHONE NUMBER</string>
+    <string name="physical_osv_selfie">SELFIE VERIFIED ?</string>
+    <string name="physical_osv_date_and_time_slot">DATE AND TIME SLOT</string>
+    <string name="physical_osv_date">DATE</string>
+    <string name="physical_osv_time_slot">TIME SLOT</string>
+    <string name="physical_osv_pan">PAN CARD</string>
+    <string name="physical_osv_yes_option">YES</string>
+    <string name="physical_osv_no_option">NO</string>
+    <string name="physical_osv_address_proof_front_doc">Front</string>
+    <string name="physical_osv_address_proof_rear_doc">Back</string>
+    <string name="physical_osv_address_proof">ADDRESS PROOF *</string>
+    <string-array name="physical_osv_address_proof_docs">
+        <item>Aadhaar Card</item>
+        <item>DrivingLicense</item>
+        <item>Passport</item>
+        <item>VoterID Card</item>
+    </string-array>
+    <string name="physical_osv_selfie_with_user">PHOTO OF USER *</string>
+    <string name="physical_osv_comments">COMMENTS (Not Mandatory)</string>
+    <string name="physical_osv_choose_time_slot">Choose preferred time slot</string>
+    <string name="physical_osv_time_slot_12_to_4_pm">12:00 PM - 04:00 PM</string>
+    <string name="physical_osv_time_slot_4_to_8_pm">04:00 PM - 08:00 PM</string>
+    <string name="physical_osv_selfie_camera">Selfie of user</string>
+    <string name="physical_osv_address_proof_front_camera">Address proof front</string>
+    <string name="physical_osv_address_proof_back_camera">Address proof back</string>
+    <string name="physical_osv_selfie_camera_error">Error opening camera. Please try again through a different phone or laptop. You can also send the selfie through your registered mail ID on care@slicepay.in</string>
+    <string name="physical_osv_selfie_verification_error">Please contact us for updating the selfie.</string>
+    <string name="physical_osv_pan_verification_error">Please contact us for updating the PAN card.</string>
+    <string name="physical_osv_address_proof_verification_error">Please contact us for updating current address proof or else you can choose another option from drop down for verifying your address.</string>
+
+
 </resources>

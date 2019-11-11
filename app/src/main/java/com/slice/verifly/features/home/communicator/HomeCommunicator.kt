@@ -3,6 +3,7 @@ package com.slice.verifly.features.home.communicator
 import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.navigation.NavDirections
+import com.slice.verifly.features.home.enums.HomeScreen
 import com.slice.verifly.features.home.enums.HomeTransaction
 
 interface HomeCommunicator {
@@ -28,6 +29,14 @@ interface HomeCommunicator {
      */
 
     fun back()
+
+    /**
+     * navigation destinations
+     */
+
+    fun getCurrentScreen(): HomeScreen?
+
+    fun refreshCurrentScreen(homeScreen: HomeScreen)
 
     // other utility communications
 

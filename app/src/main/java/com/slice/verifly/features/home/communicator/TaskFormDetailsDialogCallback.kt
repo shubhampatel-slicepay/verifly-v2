@@ -2,7 +2,7 @@ package com.slice.verifly.features.home.communicator
 
 interface TaskFormDetailsDialogCallback {
 
-    fun onClosed()
+    fun onDismissed()
 
-    fun onSoftBackButtonPressed(closeDialog: Boolean = true)
+    fun onSoftBackButtonPressed(dismiss: Boolean = true)
 }

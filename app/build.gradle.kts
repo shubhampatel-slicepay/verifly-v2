@@ -177,6 +177,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0")
 
+    // Coil
+    implementation("io.coil-kt:coil:0.8.0")
+    implementation("io.coil-kt:coil-gif:0.8.0")
+
     /**
      *  Google services
      */

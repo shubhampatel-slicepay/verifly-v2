@@ -11,7 +11,7 @@ import com.slice.verifly.features.home.communicator.TaskFormDetailsDialogCallbac
 import com.slice.verifly.features.home.communicator.TasksRecyclerAdapterCallback
 import com.slice.verifly.features.home.models.UsersTasksData
 import com.slice.verifly.models.tasks.TaskDocuments
-import kotlinx.android.synthetic.main.fragment_tasks_list.*
+import com.slice.verifly.utility.Constants
 
 class TasksListFragment: HomeBaseFragment(),
     TasksRecyclerAdapterCallback, TaskFormDetailsDialogCallback {
@@ -26,6 +26,7 @@ class TasksListFragment: HomeBaseFragment(),
 
     // Properties
 
+    private var taskFormDetailsDialog: TaskFormDetailsDialogFragment? = null
     private var userTask: UsersTasksData? = null
 
     // Lifecycle
@@ -53,26 +54,46 @@ class TasksListFragment: HomeBaseFragment(),
     // Operations
 
     private fun loadScreen() {
-        rv_tasksList
+
+    }
+
+    private fun showTaskFormDetailsScreen(task: TaskDocuments) {
+        val tag = StringBuilder()
+            .append("$TAG -> TaskFormDetailsDialogFragment").toString()
+        val ft = this.fragmentManager?.beginTransaction()
+        this.fragmentManager?.findFragmentByTag(tag)?.let {
+            ft?.remove(it)
+        }
+        taskFormDetailsDialog = null
+        taskFormDetailsDialog = TaskFormDetailsDialogFragment.newInstance().apply {
+            isCancelable = false
+            setTargetFragment(this@TasksListFragment, Constants.TASK_FORM_DETAILS_DIALOG_REQ)
+            arguments = Bundle().apply {
+                putParcelable(Constants.TASK_SELECTED, task)
+            }
+        }
+        ft?.let {
+            taskFormDetailsDialog?.show(it, tag)
+        }
     }
 
     // Adapter callbacks
 
     override fun onTaskSelected(task: TaskDocuments?) {
         task?.let {
-
+            showTaskFormDetailsScreen(it)
         }
     }
 
     // Dialog callbacks
 
-    override fun onClosed() {
-        communicator?.back()
+    override fun onDismissed() {
+        taskFormDetailsDialog?.dismiss()
     }
 
-    override fun onSoftBackButtonPressed(closeDialog: Boolean) {
-        if (closeDialog) {
-            communicator?.back()
+    override fun onSoftBackButtonPressed(dismiss: Boolean) {
+        if (dismiss) {
+            onDismissed()
         }
     }
 }

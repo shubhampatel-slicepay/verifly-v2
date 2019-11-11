@@ -4,14 +4,14 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="@dimen/padding_regular"
         android:background="@drawable/bg_screen_radial_gradient_1"
         android:id="@+id/fl_taskFormDetailsRootContainer">
 
     <TextView
             android:id="@+id/tv_formTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
             android:gravity="center"
@@ -34,13 +34,15 @@
 
     <androidx.core.widget.NestedScrollView
             android:id="@+id/nsv_formContents"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginTop="@dimen/margin_regular1"
+            android:layout_marginBottom="@dimen/margin_normal"
             android:scrollbars="vertical"
             app:layout_constraintTop_toBottomOf="@id/tv_formTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/button_formSubmit">
 
         <LinearLayout
                 android:id="@+id/ll_formContentsContainer"
@@ -60,5 +62,20 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
+
+    <Button
+            android:id="@+id/button_formSubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_xxlarge"
+            android:paddingEnd="@dimen/padding_xxlarge"
+            android:gravity="center"
+            android:text="@string/task_form_details_submit"
+            android:textSize="@dimen/text_normal"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_filled_orange"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

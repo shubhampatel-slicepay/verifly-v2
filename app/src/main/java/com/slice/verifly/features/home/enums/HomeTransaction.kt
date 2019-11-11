@@ -4,5 +4,5 @@ import com.slice.verifly.R
 
 enum class HomeTransaction(val actionID: Int) {
 
-    DASHBOARD_TO_TASKSLIST(R.id.action_dashboardFragment_to_tasksListFragment)
+    DASHBOARD_TO_TASKS_LIST(R.id.action_dashboardFragment_to_tasksListFragment)
 }

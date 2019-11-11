@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.slice.verifly.R
 import com.slice.verifly.features.home.communicator.TaskFormDetailsDialogCallback
+import com.slice.verifly.features.home.enums.TaskForm
+import com.slice.verifly.models.tasks.TaskDocuments
 import com.slice.verifly.utility.Constants
 import kotlinx.android.synthetic.main.dialog_fragment_task_form_details.*
 
@@ -21,6 +23,9 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
     // Properties
 
     private var callback: TaskFormDetailsDialogCallback? = null
+    private var task: TaskDocuments? = null
+
+    // Lifecycle
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +47,7 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         iv_formClose.setOnClickListener {
-            callback?.onClosed()
+            callback?.onDismissed()
         }
         loadTaskFormContents()
     }
@@ -53,9 +58,8 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
             it.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         }
         dialog?.setOnKeyListener { _, keyCode, _ ->
-            // BackPressed
             if (keyCode == KeyEvent.KEYCODE_BACK) {
-                callback?.onSoftBackButtonPressed()
+                callback?.onSoftBackButtonPressed(true)
                 return@setOnKeyListener true
             }
             return@setOnKeyListener false
@@ -65,6 +69,16 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
     // Operations
 
     private fun loadTaskFormContents() {
-
+        task?.let {
+            when (it.taskID) {
+                "ops0007" -> {
+                    if (it.taskStatus.equals(Constants.COMPLETED_STATUS)) {
+                        TaskForm.OPS0007.loadUnEditableForm(it)
+                    } else {
+                        TaskForm.OPS0007.loadEditableForm(it)
+                    }
+                }
+            }
+        }
     }
 }

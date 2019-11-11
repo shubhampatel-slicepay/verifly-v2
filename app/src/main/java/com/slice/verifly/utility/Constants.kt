@@ -44,4 +44,5 @@ object Constants {
     // Parcel keys
 
     const val USER_TASK_SELECTED = "user-task"
+    const val TASK_SELECTED = "task"
 }

@@ -1,5 +1,6 @@
 package com.slice.verifly.features.home.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -156,7 +157,8 @@ class DashboardFragment: HomeBaseFragment(), UsersTasksRecyclerAdapterCallback {
 
     override fun onUserTaskSelected(userTask: UsersTasksData?) {
         userTask?.let {
-            val action = DashboardFragmentDirections.actionDashboardFragmentToTasksListFragment(it)
+            val action = DashboardFragmentDirections
+                .actionDashboardFragmentToTasksListFragment(it)
             communicator?.transact(action)
         }
     }
@@ -169,21 +171,27 @@ class DashboardFragment: HomeBaseFragment(), UsersTasksRecyclerAdapterCallback {
         completedStatusButton: Boolean = false
     ) {
         if (newStatusButton) {
-            tv_newStatus.setBackgroundResource(R.drawable.bg_textview_enabled)
+            tv_newStatus.setBackgroundResource(R.drawable.bg_filled_green)
+            tv_newStatus.setTextColor(Color.parseColor("#FFFFFF"))
         } else {
-            tv_newStatus.setBackgroundResource(R.drawable.bg_textview_disabled)
+            tv_newStatus.setBackgroundResource(R.drawable.border_gray)
+            tv_newStatus.setTextColor(Color.parseColor("#000000"))
         }
 
         if (ongoingStatusButton) {
-            tv_ongoingStatus.setBackgroundResource(R.drawable.bg_textview_enabled)
+            tv_ongoingStatus.setBackgroundResource(R.drawable.bg_filled_green)
+            tv_ongoingStatus.setTextColor(Color.parseColor("#FFFFFF"))
         } else {
-            tv_ongoingStatus.setBackgroundResource(R.drawable.bg_textview_disabled)
+            tv_ongoingStatus.setBackgroundResource(R.drawable.border_gray)
+            tv_ongoingStatus.setTextColor(Color.parseColor("#000000"))
         }
 
         if (completedStatusButton) {
-            tv_completedStatus.setBackgroundResource(R.drawable.bg_textview_enabled)
+            tv_completedStatus.setBackgroundResource(R.drawable.bg_filled_green)
+            tv_completedStatus.setTextColor(Color.parseColor("#FFFFFF"))
         } else {
-            tv_completedStatus.setBackgroundResource(R.drawable.bg_textview_disabled)
+            tv_completedStatus.setBackgroundResource(R.drawable.border_gray)
+            tv_completedStatus.setTextColor(Color.parseColor("#000000"))
         }
     }
 

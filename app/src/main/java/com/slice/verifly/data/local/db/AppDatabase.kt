@@ -10,7 +10,7 @@ import com.slice.verifly.data.local.db.entity.TasksEntity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@Database(entities = [TasksEntity::class], version = 1)
+//@Database(entities = [TasksEntity::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
 
     // Define all the DAO here
@@ -18,7 +18,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun tasksDao(): TasksDao
 
     companion object {
-        private val DB_NAME = "verifly_database"
+        private const val DB_NAME = "verifly_database"
 
         @Volatile
         private var INSTANCE: AppDatabase? = null

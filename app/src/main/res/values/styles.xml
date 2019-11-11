@@ -36,8 +36,8 @@
         <!-- This is important! Don't forget to set window background -->
         <item name="android:windowBackground">@color/white</item>
         <!-- Additionally if you want animations when dialog opening -->
-        <item name="android:windowEnterAnimation">@anim/slide_in_up</item>
-        <item name="android:windowExitAnimation">@anim/slide_out_down</item>
+        <item name="android:windowEnterAnimation">@anim/push_up_in</item>
+        <item name="android:windowExitAnimation">@anim/push_down_out</item>
     </style>
 
 </resources>

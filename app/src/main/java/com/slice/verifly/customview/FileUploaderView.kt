@@ -8,8 +8,8 @@ import android.view.View
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import coil.api.load
 import com.slice.verifly.R
-import com.slice.verifly.utility.inflateImage
 import kotlinx.android.synthetic.main.layout_file_uploader.view.*
 
 class FileUploaderView(
@@ -52,7 +52,7 @@ class FileUploaderView(
 
     fun loadImage(uri: Uri) {
         showProgress()
-        iv_attachment_img.inflateImage(uri, showProgress = false)
+        iv_attachment_img.load(uri)
         hideProgress()
     }
 }

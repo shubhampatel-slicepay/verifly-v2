@@ -2,38 +2,23 @@ package com.slice.verifly.utility
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.Build
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.IntRange
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.google.android.material.snackbar.Snackbar
 import com.slice.verifly.R
-
-private const val GLOBAL_TAG = "Extensions"
 
 fun Any?.isObjectNotEmpty() : Boolean {
     this?.let {
@@ -162,133 +147,4 @@ fun Activity.hideKeyboard() {
 fun Context.hideKeyboard(view: View?) {
     val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     inputMethodManager.hideSoftInputFromWindow(view?.windowToken, 0)
-}
-
-fun Context.showAlertDialog(
-    title: String?,
-    message: String?,
-    cancelable: Boolean = true,
-    cancelableTouchOutside: Boolean = true,
-    positiveButton: String? = null,
-    positiveAction: ((dialog: DialogInterface, which: Int) -> Unit)? = null,
-    negativeButton: String? = null,
-    negativeAction: ((dialog: DialogInterface, which: Int) -> Unit)? = null,
-    neutralButton: String? = null,
-    neutralAction: ((dialog: DialogInterface, which: Int) -> Unit)? = null
-): AlertDialog {
-    val builder = AlertDialog.Builder(this)
-    with(builder)
-    {
-        title?.let { setTitle(it) }
-        message?.let { setMessage(it) }
-        setCancelable(cancelable)
-        this.create().setCanceledOnTouchOutside(cancelableTouchOutside)
-        positiveButton?.let { text ->
-            positiveAction?.let {
-                setPositiveButton(text, it)
-            } ?: setPositiveButton(text, null)
-        } ?: setPositiveButton(null, null)
-        negativeButton?.let { text ->
-            negativeAction?.let {
-                setNegativeButton(text, it)
-            } ?: setNegativeButton(text, null)
-        } ?: setNegativeButton(null, null)
-        neutralButton?.let { text ->
-            neutralAction?.let {
-                setNeutralButton(text, it)
-            } ?: setNeutralButton(text, null)
-        } ?: setNeutralButton(null, null)
-    }
-    val alertDialog = builder.create()
-    alertDialog.show()
-    return alertDialog
-}
-
-fun ImageView?.inflateImage(uri: Uri, showProgress: Boolean = true) {
-    this?.context?.let {
-        if (showProgress) {
-            val circularProgressDrawable = CircularProgressDrawable(it).apply {
-                strokeWidth = 5f
-                centerRadius = 30f
-                start()
-            }
-            Glide.with(it)
-                .load(uri)
-                .centerCrop()
-                .placeholder(circularProgressDrawable)
-                .transition(withCrossFade())
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        circularProgressDrawable.setVisible(false, false)
-                        SlicePayLog.info(GLOBAL_TAG, "Glide -> uri = $uri -> exception = ${e?.message}")
-                        return false
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        circularProgressDrawable.setVisible(false, false)
-                        return false
-                    }
-                })
-                .into(this)
-        } else {
-            Glide.with(it)
-                .load(uri)
-                .centerCrop()
-                .transition(withCrossFade())
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .into(this)
-        }
-    }
-}
-
-fun ImageView?.inflateImage(drawable: Int) {
-    this?.context?.let {
-        val circularProgressDrawable = CircularProgressDrawable(it).apply {
-            strokeWidth = 5f
-            centerRadius = 30f
-            start()
-        }
-        Glide.with(it)
-            .load(drawable)
-            .centerCrop()
-            .transition(withCrossFade())
-            .placeholder(circularProgressDrawable)
-            .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-            .listener(object : RequestListener<Drawable> {
-                override fun onLoadFailed(
-                    e: GlideException?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    circularProgressDrawable.setVisible(false, false)
-                    SlicePayLog.info(GLOBAL_TAG, "Glide -> exception = ${e?.message}")
-                    return false
-                }
-
-                override fun onResourceReady(
-                    resource: Drawable?,
-                    model: Any?,
-                    target: Target<Drawable>?,
-                    dataSource: DataSource?,
-                    isFirstResource: Boolean
-                ): Boolean {
-                    circularProgressDrawable.setVisible(false, false)
-                    return false
-                }
-            })
-            .into(this)
-    }
 }

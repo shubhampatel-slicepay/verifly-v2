@@ -11,6 +11,7 @@ import com.slice.verifly.R
 import com.slice.verifly.customview.LoadingView
 import com.slice.verifly.features.home.viewmodel.HomeActivityViewModel
 import com.slice.verifly.features.home.communicator.HomeCommunicator
+import com.slice.verifly.features.home.enums.HomeScreen
 import com.slice.verifly.features.home.enums.HomeTransaction
 import com.slice.verifly.utility.disableScreen
 import com.slice.verifly.utility.enableScreen
@@ -56,7 +57,7 @@ class HomeActivity : AppCompatActivity(),
 
     }
 
-    // Communicator & Callbacks
+    // Communicator
 
     override fun transact(navDirections: NavDirections) {
         navController.navigate(navDirections)
@@ -72,6 +73,27 @@ class HomeActivity : AppCompatActivity(),
 
     override fun back() {
         navController.navigateUp()
+    }
+
+    override fun getCurrentScreen(): HomeScreen? {
+        val destinationLabel = navController.currentDestination?.label
+        destinationLabel?.let {
+            return when {
+                it.contains(HomeScreen.DASHBOARD.name) -> HomeScreen.DASHBOARD
+                it.contains(HomeScreen.TASKS_LIST.name) -> HomeScreen.TASKS_LIST
+                else -> null
+            }
+        } ?: return null
+    }
+
+    override fun refreshCurrentScreen(homeScreen: HomeScreen) {
+        navController.currentDestination?.let {
+            if (it.label == homeScreen.name) {
+                val actionId = it.id
+                navController.popBackStack(it.id, true)
+                navController.navigate(actionId)
+            }
+        }
     }
 
     override fun setUpToolbar(title: String, showNavIcon: Boolean, showExpandBtn: Boolean) {

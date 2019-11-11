@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
-            android:background="@drawable/bg_textview_disabled"
+            android:background="@drawable/border_gray"
             android:gravity="center"
             android:padding="@dimen/padding_medium"
             android:text="@string/dashboard_new_status"
@@ -23,14 +23,15 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/bg_textview_enabled" />
+            tools:background="@drawable/bg_filled_green"
+            tools:textColor="@color/white"/>
 
     <TextView
             android:id="@+id/tv_ongoingStatus"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
-            android:background="@drawable/bg_textview_disabled"
+            android:background="@drawable/border_gray"
             android:gravity="center"
             android:padding="@dimen/padding_medium"
             android:text="@string/dashboard_ongoing_status"
@@ -46,7 +47,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_small"
-            android:background="@drawable/bg_textview_disabled"
+            android:background="@drawable/border_gray"
             android:gravity="center"
             android:padding="@dimen/padding_medium"
             android:text="@string/dashboard_completed_status"

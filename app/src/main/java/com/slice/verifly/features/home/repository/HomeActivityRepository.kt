@@ -6,14 +6,14 @@ import com.slice.verifly.features.home.models.AssignedTasksData
 import com.slice.verifly.features.home.models.UsersTasksData
 import com.slice.verifly.models.tasks.Task
 import com.slice.verifly.models.tasks.TaskDocuments
+import com.slice.verifly.utility.AppUtils
 import com.slice.verifly.utility.Constants
-import com.slice.verifly.utility.isObjectNotEmpty
 
 class HomeActivityRepository(private val dataManagerHelper: DataManagerHelper): BaseRepository() {
 
     suspend fun getAssignedTasks(): List<Task?>? {
         val obtainedData = dataManagerHelper.getAssignedTasks()
-        return if ((obtainedData?.body.isObjectNotEmpty()) and (obtainedData?.body?.status.equals(
+        return if ((AppUtils.isObjectNotEmpty(obtainedData?.body)) and (obtainedData?.body?.status.equals(
                 Constants.SUCCESS_RESPONSE_STATUS))) {
             obtainedData?.body?.data
         } else {

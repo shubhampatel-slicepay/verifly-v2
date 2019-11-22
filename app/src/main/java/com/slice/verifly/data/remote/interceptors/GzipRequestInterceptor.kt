@@ -1,15 +1,12 @@
 package com.slice.verifly.data.remote.interceptors
 
-import com.slice.verifly.utility.isObjectNotEmpty
-import com.slice.verifly.utility.isStringNotEmpty
+import android.text.TextUtils
+import com.slice.verifly.utility.AppUtils
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.RequestBody
 import okhttp3.Response
-import okio.Buffer
-import okio.BufferedSink
-import okio.GzipSink
-import okio.Okio
+import okio.*
 import java.io.IOException
 
 object GzipRequestInterceptor : Interceptor {
@@ -18,7 +15,7 @@ object GzipRequestInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val req = chain.request()
 
-        if ((!req.isObjectNotEmpty()) or (req.header("Content-Encoding").isStringNotEmpty())) {
+        if ((!AppUtils.isObjectNotEmpty(req)) or (!TextUtils.isEmpty(req.header("Content-Encoding")))) {
             return chain.proceed(req)
         }
 
@@ -45,7 +42,7 @@ object GzipRequestInterceptor : Interceptor {
             }
 
             override fun contentLength(): Long {
-                return buffer.size()
+                return buffer.size
             }
         }
     }
@@ -58,7 +55,7 @@ object GzipRequestInterceptor : Interceptor {
 
             @Throws(IOException::class)
             override fun writeTo(sink: BufferedSink) {
-                val gzipSink = Okio.buffer(GzipSink(sink))
+                val gzipSink = GzipSink(sink).buffer()
                 requestBody?.writeTo(gzipSink)
                 gzipSink.close()
             }

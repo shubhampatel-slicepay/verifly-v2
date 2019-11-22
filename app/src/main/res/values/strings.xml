@@ -40,9 +40,9 @@
     <string name="task_completed_status">Submitted</string>
 
     <!-- TaskDetails -->
-    <string name="task_form_details_submit">Submit</string>
+    <string name="task_form_details_submit">SUBMIT</string>
 
-    <!-- TaskDetails -> OSV -->
+    <!-- TaskDetails -> OsvUiComponent -->
     <string name="physical_osv_name">NAME</string>
     <string name="physical_osv_current_address">CURRENT ADDRESS</string>
     <string name="physical_osv_phone_number">PHONE NUMBER</string>

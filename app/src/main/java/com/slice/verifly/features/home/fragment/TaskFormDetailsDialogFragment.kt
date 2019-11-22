@@ -69,14 +69,14 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
     // Operations
 
     private fun loadTaskFormContents() {
-        task?.let {
-            when (it.taskID) {
-                "ops0007" -> {
-                    if (it.taskStatus.equals(Constants.COMPLETED_STATUS)) {
-                        TaskForm.OPS0007.loadUnEditableForm(it)
-                    } else {
-                        TaskForm.OPS0007.loadEditableForm(it)
-                    }
+        task?.let { task ->
+            when (task.taskID) {
+                TaskForm.OPS0007.name -> {
+
+                }
+
+                else -> {
+
                 }
             }
         }

@@ -23,6 +23,12 @@ object AppUtils {
 
     private const val TAG = "AppUtils"
 
+    fun isObjectNotEmpty(obj: Any?) : Boolean {
+        obj?.let {
+            return true
+        } ?: return false
+    }
+
     fun getDeviceName(): String {
         val manufacturer = Build.MANUFACTURER
         val model = Build.MODEL
@@ -99,7 +105,7 @@ object AppUtils {
         } ?: return null
     }
 
-    fun inflateImage(imageView: ImageView?, uri: Uri, showProgress: Boolean = true) {
+    fun inflateImage(imageView: ImageView?, uri: Uri?, drawable: Int?, showProgress: Boolean = true) {
         imageView?.let {
             if (showProgress) {
                 val circularProgressDrawable = CircularProgressDrawable(it.context).apply {
@@ -107,85 +113,93 @@ object AppUtils {
                     centerRadius = 30f
                     start()
                 }
-                Glide.with(it.context)
-                    .load(uri)
-                    .centerCrop()
-                    .placeholder(circularProgressDrawable)
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .listener(object : RequestListener<Drawable> {
-                        override fun onLoadFailed(
-                            e: GlideException?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            circularProgressDrawable.setVisible(false, false)
-                            SlicePayLog.info(TAG, "Glide -> uri = $uri -> exception = ${e?.message}")
-                            return false
-                        }
+                uri?.let { value ->
+                    Glide.with(it.context)
+                        .load(value)
+                        .centerCrop()
+                        .placeholder(circularProgressDrawable)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                circularProgressDrawable.setVisible(false, false)
+                                SlicePayLog.info(TAG, "Glide -> uri = $uri -> exception = ${e?.message}")
+                                return false
+                            }
 
-                        override fun onResourceReady(
-                            resource: Drawable?,
-                            model: Any?,
-                            target: Target<Drawable>?,
-                            dataSource: DataSource?,
-                            isFirstResource: Boolean
-                        ): Boolean {
-                            circularProgressDrawable.setVisible(false, false)
-                            return false
-                        }
-                    })
-                    .into(it)
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                circularProgressDrawable.setVisible(false, false)
+                                return false
+                            }
+                        })
+                        .into(it)
+                }
+                drawable?.let { value ->
+                    Glide.with(it.context)
+                        .load(value)
+                        .centerCrop()
+                        .placeholder(circularProgressDrawable)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .listener(object : RequestListener<Drawable> {
+                            override fun onLoadFailed(
+                                e: GlideException?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                circularProgressDrawable.setVisible(false, false)
+                                SlicePayLog.info(TAG, "Glide -> uri = $uri -> exception = ${e?.message}")
+                                return false
+                            }
+
+                            override fun onResourceReady(
+                                resource: Drawable?,
+                                model: Any?,
+                                target: Target<Drawable>?,
+                                dataSource: DataSource?,
+                                isFirstResource: Boolean
+                            ): Boolean {
+                                circularProgressDrawable.setVisible(false, false)
+                                return false
+                            }
+                        })
+                        .into(it)
+
+                }
             } else {
-                Glide.with(it)
-                    .load(uri)
-                    .centerCrop()
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                    .into(it)
+                uri?.let { value ->
+                    Glide.with(it)
+                        .load(value)
+                        .centerCrop()
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .into(it)
+                }
+                drawable?.let { value ->
+                    Glide.with(it)
+                        .load(value)
+                        .centerCrop()
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+                        .into(it)
+                }
             }
         }
     }
 
-    fun inflateImage(imageView: ImageView?, drawable: Int) {
-        imageView?.let {
-            val circularProgressDrawable = CircularProgressDrawable(it.context).apply {
-                strokeWidth = 5f
-                centerRadius = 30f
-                start()
-            }
-            Glide.with(it.context)
-                .load(drawable)
-                .centerCrop()
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(circularProgressDrawable)
-                .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-                .listener(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(
-                        e: GlideException?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        circularProgressDrawable.setVisible(false, false)
-                        SlicePayLog.info(TAG, "Glide -> exception = ${e?.message}")
-                        return false
-                    }
-
-                    override fun onResourceReady(
-                        resource: Drawable?,
-                        model: Any?,
-                        target: Target<Drawable>?,
-                        dataSource: DataSource?,
-                        isFirstResource: Boolean
-                    ): Boolean {
-                        circularProgressDrawable.setVisible(false, false)
-                        return false
-                    }
-                })
-                .into(it)
-        }
+    fun formatDate(date: Date): String {
+        return SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)
     }
-
 }

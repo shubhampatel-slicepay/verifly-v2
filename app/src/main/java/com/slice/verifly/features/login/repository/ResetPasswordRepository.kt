@@ -4,7 +4,6 @@ import com.slice.verifly.base.BaseRepository
 import com.slice.verifly.data.repo.DataManagerHelper
 import com.slice.verifly.models.request.RequestModel
 import com.slice.verifly.utility.Constants
-import com.slice.verifly.utility.isObjectNotEmpty
 
 class ResetPasswordRepository(private val dataManagerHelper: DataManagerHelper): BaseRepository() {
 

@@ -20,18 +20,6 @@ import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.snackbar.Snackbar
 import com.slice.verifly.R
 
-fun Any?.isObjectNotEmpty() : Boolean {
-    this?.let {
-        return true
-    } ?: return false
-}
-
-fun String?.isStringNotEmpty() : Boolean {
-    this?.let {
-        return it.trim().isNotEmpty()
-    } ?: return false
-}
-
 fun Activity.ifHasPermission(vararg permissions: String): Boolean {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         permissions.all { singlePermission ->

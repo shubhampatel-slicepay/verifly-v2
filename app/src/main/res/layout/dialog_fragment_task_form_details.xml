@@ -44,13 +44,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/button_formSubmit">
 
-        <LinearLayout
+        <!--<LinearLayout
                 android:id="@+id/ll_formContentsContainer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-            <!-- Task form details' layouts included below here -->
+            &lt;!&ndash; Task form details' layouts included below here &ndash;&gt;
 
             <include layout="@layout/layout_task_osv"
                     android:id="@+id/l_osvTask"
@@ -59,21 +59,24 @@
                     android:visibility="gone"
                     tools:visibility="visible" />
 
-        </LinearLayout>
+        </LinearLayout>-->
 
     </androidx.core.widget.NestedScrollView>
 
-    <Button
+    <TextView
             android:id="@+id/button_formSubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="@dimen/padding_normal"
             android:paddingStart="@dimen/padding_xxlarge"
             android:paddingEnd="@dimen/padding_xxlarge"
+            android:paddingBottom="@dimen/padding_normal"
             android:gravity="center"
             android:text="@string/task_form_details_submit"
             android:textSize="@dimen/text_normal"
             android:textColor="@color/white"
-            android:background="@drawable/bg_filled_orange"
+            android:textStyle="bold"
+            android:background="@android:color/transparent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />

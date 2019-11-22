@@ -5,7 +5,7 @@ import android.content.Context
 import android.view.Window
 import coil.api.load
 import com.slice.verifly.R
-import kotlinx.android.synthetic.main.dialog_loading.*
+import kotlinx.android.synthetic.main.custom_dialog_loading.*
 
 class LoadingView(val context: Context) {
 
@@ -16,7 +16,7 @@ class LoadingView(val context: Context) {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setCancelable(false)
             setCanceledOnTouchOutside(false)
-            setContentView(R.layout.dialog_loading)
+            setContentView(R.layout.custom_dialog_loading)
         }
         dialog?.iv_loading?.load(R.drawable.gif_loading)
     }

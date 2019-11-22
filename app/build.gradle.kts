@@ -42,6 +42,10 @@ android {
             storePassword = "meshapp1234"
         }
     }
+    compileOptions {
+        sourceCompatibility= JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
     tasks.withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "12"
     }
@@ -57,7 +61,7 @@ android {
             //ext.set("enableCrashlytics", false)
             signingConfig = signingConfigs.getByName("debug")
 
-            buildConfigField("String", "SERVER_URL", "\"https://api-feature.slicepay.in:9021/\"")
+            buildConfigField("String", "SERVER_URL", "\"https://api-feature.slicepay.in:9137/\"")
             buildConfigField("String", "URL", "\"ninjadev.slicepay.in/\"")
             buildConfigField("String", "WEB_URL", "\"https://dev.slicepay.in/\"")
             buildConfigField("String", "ENVIRONMENT", "\"dev\"")
@@ -73,8 +77,7 @@ android {
             //ext.set("enableCrashlytics", false)
             signingConfig = signingConfigs.getByName("debug")
 
-            //buildConfigField("String", "SERVER_URL", "\"https://api-stage-feature.slicepay.in:9036/\"")
-            buildConfigField("String", "SERVER_URL", "\"https://34.93.170.28:80/\"")
+            buildConfigField("String", "SERVER_URL", "\"https://api-stage-feature.slicepay.in:9066/\"")
             buildConfigField("String", "URL", "\"ninjatest.slicepay.in\"")
             buildConfigField("String", "WEB_URL", "\"https://test.slicepay.in/\"")
             buildConfigField("String", "ENVIRONMENT", "\"test\"")
@@ -141,7 +144,7 @@ dependencies {
 
     implementation("androidx.appcompat:appcompat:1.1.0")
     implementation("androidx.core:core-ktx:1.1.0")
-    implementation("androidx.recyclerview:recyclerview:1.0.0")
+    implementation("androidx.recyclerview:recyclerview:1.1.0")
     implementation("androidx.cardview:cardview:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
 
@@ -158,9 +161,9 @@ dependencies {
     kapt("androidx.lifecycle:lifecycle-compiler:2.2.0-alpha01")
 
     // Room persistence
-    implementation("androidx.room:room-runtime:2.2.1")
-    kapt("androidx.room:room-compiler:2.2.1")
-    implementation("androidx.room:room-ktx:2.2.1") // Kotlin Extensions and Coroutines support
+    implementation("androidx.room:room-runtime:2.2.2")
+    kapt("androidx.room:room-compiler:2.2.2")
+    implementation("androidx.room:room-ktx:2.2.2") // Kotlin Extensions and Coroutines support
 
     /**
      *  Kotlin frameworks
@@ -174,8 +177,8 @@ dependencies {
     implementation("org.koin:koin-androidx-ext:2.0.1")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2")
 
     // Coil
     implementation("io.coil-kt:coil:0.8.0")
@@ -197,7 +200,7 @@ dependencies {
      */
 
     // Okhttp3
-    implementation("com.squareup.okhttp3:okhttp:3.12.0")
+    implementation("com.squareup.okhttp3:okhttp:3.12.6")
     implementation("com.squareup.okhttp3:logging-interceptor:3.11.0")
 
     // REST client

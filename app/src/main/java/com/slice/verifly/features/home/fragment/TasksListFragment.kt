@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.slice.verifly.R
+import com.slice.verifly.features.home.adapter.TasksRecyclerAdapter
 import com.slice.verifly.features.home.base.HomeBaseFragment
 import com.slice.verifly.features.home.communicator.TaskFormDetailsDialogCallback
 import com.slice.verifly.features.home.communicator.TasksRecyclerAdapterCallback
 import com.slice.verifly.features.home.models.UsersTasksData
 import com.slice.verifly.models.tasks.TaskDocuments
 import com.slice.verifly.utility.Constants
+import kotlinx.android.synthetic.main.fragment_tasks_list.*
 
 class TasksListFragment: HomeBaseFragment(),
     TasksRecyclerAdapterCallback, TaskFormDetailsDialogCallback {
@@ -28,6 +31,7 @@ class TasksListFragment: HomeBaseFragment(),
 
     private var taskFormDetailsDialog: TaskFormDetailsDialogFragment? = null
     private var userTask: UsersTasksData? = null
+    private var adapter: TasksRecyclerAdapter? = null
 
     // Lifecycle
 
@@ -42,7 +46,7 @@ class TasksListFragment: HomeBaseFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.userTask = args.userTask
-        loadScreen()
+        populateRecycler()
     }
 
     // Parent abstract functions
@@ -53,13 +57,26 @@ class TasksListFragment: HomeBaseFragment(),
 
     // Operations
 
-    private fun loadScreen() {
-
+    private fun populateRecycler() {
+        val adapter = adapter?.let { it } ?: kotlin.run {
+            userTask?.taskDocs?.let {
+                TasksRecyclerAdapter(it, this@TasksListFragment)
+            } ?: kotlin.run {
+                showNoTasksListScreen()
+                null
+            }
+        }
+        adapter?.let {
+            showTasksListScreen()
+            with(rv_tasksList) {
+                layoutManager = LinearLayoutManager(activity)
+                this.adapter = it
+            }
+        }
     }
 
     private fun showTaskFormDetailsScreen(task: TaskDocuments) {
-        val tag = StringBuilder()
-            .append("$TAG -> TaskFormDetailsDialogFragment").toString()
+        val tag = StringBuilder().append("$TAG -> TaskFormDetailsDialogFragment").toString()
         val ft = this.fragmentManager?.beginTransaction()
         this.fragmentManager?.findFragmentByTag(tag)?.let {
             ft?.remove(it)
@@ -95,5 +112,17 @@ class TasksListFragment: HomeBaseFragment(),
         if (dismiss) {
             onDismissed()
         }
+    }
+
+    // Utility methods
+
+    private fun showNoTasksListScreen() {
+        rv_tasksList.visibility = View.GONE
+        tv_tasksListBlankText.visibility = View.VISIBLE
+    }
+
+    private fun showTasksListScreen() {
+        tv_tasksListBlankText.visibility = View.GONE
+        rv_tasksList.visibility = View.VISIBLE
     }
 }

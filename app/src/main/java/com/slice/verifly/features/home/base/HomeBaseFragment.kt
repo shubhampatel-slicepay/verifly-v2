@@ -69,9 +69,6 @@ abstract class HomeBaseFragment: BaseFragment() {
     }
 
     // type-unsafe navigation arguments
-
-
-
     protected fun navigationController(
         @IdRes actionId: Int,
         bundle: Bundle? = null

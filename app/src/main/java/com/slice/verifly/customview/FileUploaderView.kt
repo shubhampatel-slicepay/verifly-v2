@@ -5,10 +5,11 @@ import android.net.Uri
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.RelativeLayout
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import coil.api.load
+import coil.request.CachePolicy
+import coil.transform.CircleCropTransformation
 import com.slice.verifly.R
 import kotlinx.android.synthetic.main.custom_layout_file_uploader.view.*
 
@@ -16,9 +17,9 @@ class FileUploaderView(
     context: Context,
     attrs: AttributeSet?,
     defStyleAttr: Int = 0
-): RelativeLayout(context, attrs, defStyleAttr) {
+): ConstraintLayout(context, attrs, defStyleAttr) {
 
-    constructor(context: Context): this(context, null)
+    constructor(context: Context): this(context, null, 0)
 
     init {
         LayoutInflater.from(context).inflate(R.layout.custom_layout_file_uploader, this, false)
@@ -26,33 +27,24 @@ class FileUploaderView(
     }
 
     private fun setDefault() {
-        iv_attachment_img.visibility = View.VISIBLE
-        //pb_uploading.visibility = View.GONE
         val image = ContextCompat.getDrawable(iv_attachment_img.context, R.drawable.file_upload)
         image?.let {
             iv_attachment_img.setImageDrawable(it)
         }
-    }
-
-    private fun showProgress() {
-        iv_attachment_img.visibility = View.VISIBLE
-        iv_attachment_img.alpha = .5f
-        //pb_uploading.visibility = View.VISIBLE
-    }
-
-    private fun hideProgress() {
-        //pb_uploading.visibility = View.GONE
-        iv_attachment_img.visibility = View.VISIBLE
-        iv_attachment_img.alpha = 1f
-    }
-
-    fun isInProgress(): Boolean {
-        return  true //pb_uploading.isVisible
+        tv_attachment_name.visibility = View.GONE
     }
 
     fun loadImage(uri: Uri) {
-        showProgress()
-        iv_attachment_img.load(uri)
-        hideProgress()
+        iv_attachment_img?.load(uri) {
+            crossfade(true)
+            placeholder(R.drawable.gif_uploading)
+            transformations(CircleCropTransformation())
+            memoryCachePolicy(CachePolicy.DISABLED)
+        }
+    }
+
+    fun showAttachmentName(name: String) {
+        tv_attachment_name.visibility = View.VISIBLE
+        tv_attachment_name.text = name
     }
 }

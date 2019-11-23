@@ -123,14 +123,14 @@
                 android:scaleType="fitXY"
                 android:visibility="visible"
                 tools:ignore="ContentDescription"
-                tools:visibility="gone"/>
+                tools:visibility="visible"/>
 
         <RadioGroup
                 android:id="@+id/rg_selfie_verification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                tools:visibility="gone">
+                tools:visibility="visible">
             <RadioButton
                     android:id="@+id/rb_selfie_verified_yes"
                     android:layout_width="wrap_content"

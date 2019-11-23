@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.slice.verifly.R
+import com.slice.verifly.features.home.base.BaseUiComponent
 import com.slice.verifly.features.home.communicator.TaskFormDetailsDialogCallback
 import com.slice.verifly.features.home.enums.TaskForm
 import com.slice.verifly.models.tasks.TaskDocuments
@@ -24,6 +25,7 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
 
     private var callback: TaskFormDetailsDialogCallback? = null
     private var task: TaskDocuments? = null
+    private var uiComponent: BaseUiComponent? = null
 
     // Lifecycle
 
@@ -33,6 +35,11 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
         if ((targetRequestCode == Constants.TASK_FORM_DETAILS_DIALOG_REQ)
             and (targetFragment is TaskFormDetailsDialogCallback)) {
             callback = targetFragment as TaskFormDetailsDialogCallback
+        }
+        arguments?.let {
+            if (it.containsKey(Constants.TASK_SELECTED)) {
+                task = it[Constants.TASK_SELECTED] as TaskDocuments
+            }
         }
     }
 
@@ -46,17 +53,7 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        iv_formClose.setOnClickListener {
-            callback?.onDismissed()
-        }
-        loadTaskFormContents()
-    }
-
-    override fun onStart() {
-        super.onStart()
-        dialog?.let {
-            it.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        }
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         dialog?.setOnKeyListener { _, keyCode, _ ->
             if (keyCode == KeyEvent.KEYCODE_BACK) {
                 callback?.onSoftBackButtonPressed(true)
@@ -64,6 +61,10 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
             }
             return@setOnKeyListener false
         }
+        iv_formClose.setOnClickListener {
+            callback?.onDismissed()
+        }
+        loadTaskFormContents()
     }
 
     // Operations
@@ -72,7 +73,10 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
         task?.let { task ->
             when (task.taskID) {
                 TaskForm.OPS0007.name -> {
-
+                    activity?.let { context ->
+                        uiComponent = TaskForm.OPS0007.showForm(context = context, task = task)
+                        uiComponent?.let { ll_formContainer.addView(it) }
+                    }
                 }
 
                 else -> {

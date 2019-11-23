@@ -5,9 +5,9 @@ import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import coil.api.load
 import com.slice.verifly.R
+import com.slice.verifly.features.home.base.BaseUiComponent
 import com.slice.verifly.models.tasks.TaskDocuments
 import com.slice.verifly.utility.AppUtils
 import kotlinx.android.synthetic.main.layout_task_osv.view.*
@@ -18,10 +18,19 @@ class OsvUiComponent(
     defStyleAttr: Int = 0,
     private val taskDoc: TaskDocuments,
     isEditable: Boolean = true
-): ConstraintLayout(context, attrs, defStyleAttr) {
+): BaseUiComponent(context, attrs, defStyleAttr) {
 
     companion object {
-        private val editable: Editable.Factory = Editable.Factory.getInstance()
+        fun newInstance(
+            context: Context,
+            attrs: AttributeSet? = null,
+            defStyleAttr: Int = 0,
+            taskDoc: TaskDocuments,
+            isEditable: Boolean = true
+        ) = OsvUiComponent(context, attrs, defStyleAttr, taskDoc, isEditable)
+
+        private lateinit var editable: Editable.Factory
+
         private const val PAN = "pan"
         private const val USER_PHOTO = "userPhoto"
         private const val ADDRESS_PROOF_TYPE = "addressProofType"
@@ -38,8 +47,9 @@ class OsvUiComponent(
     }
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.layout_task_osv, this, true)
+        LayoutInflater.from(context).inflate(R.layout.layout_task_form_osv, this, true)
         if (isEditable) {
+            editable = Editable.Factory.getInstance()
             enableEditableForm()
         } else {
             enableUnEditableForm()
@@ -51,6 +61,10 @@ class OsvUiComponent(
     }
 
     private fun enableUnEditableForm() {
+
+    }
+
+    /*private fun enableUnEditableForm() {
         // name
         taskDoc.data?.userName?.let {
             tiet_name.text = editable.newEditable(it)
@@ -165,5 +179,5 @@ class OsvUiComponent(
         } ?: kotlin.run {
             til_comment.visibility = View.GONE
         }
-    }
+    }*/
 }

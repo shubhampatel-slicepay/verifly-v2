@@ -32,36 +32,17 @@
             tools:ignore="ContentDescription"
             tools:text="On-Site Verification" />
 
-    <androidx.core.widget.NestedScrollView
-            android:id="@+id/nsv_formContents"
+    <LinearLayout
+            android:id="@+id/ll_formContainer"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:orientation="vertical"
             android:layout_marginTop="@dimen/margin_regular1"
             android:layout_marginBottom="@dimen/margin_normal"
-            android:scrollbars="vertical"
             app:layout_constraintTop_toBottomOf="@id/tv_formTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/button_formSubmit">
-
-        <!--<LinearLayout
-                android:id="@+id/ll_formContentsContainer"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-            &lt;!&ndash; Task form details' layouts included below here &ndash;&gt;
-
-            <include layout="@layout/layout_task_osv"
-                    android:id="@+id/l_osvTask"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
-
-        </LinearLayout>-->
-
-    </androidx.core.widget.NestedScrollView>
+            app:layout_constraintBottom_toTopOf="@id/button_formSubmit" />
 
     <TextView
             android:id="@+id/button_formSubmit"

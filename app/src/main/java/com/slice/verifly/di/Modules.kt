@@ -3,6 +3,7 @@ package com.slice.verifly.di
 import android.app.Application
 import android.content.Context
 import com.google.gson.Gson
+import com.slice.verifly.application.VeriflyApplication
 import com.slice.verifly.data.local.db.AppDatabase
 import com.slice.verifly.data.local.pref.AppPreferences
 import com.slice.verifly.data.repo.DataManagerHelper
@@ -51,5 +52,5 @@ fun provideCoroutineScope(): CoroutineScope {
 }
 
 fun provideAppContext(androidApplication: Application): Context? {
-    return androidApplication.applicationContext
+    return (androidApplication as VeriflyApplication).applicationContext
 }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
@@ -15,6 +16,7 @@ import com.slice.verifly.features.home.enums.HomeScreen
 import com.slice.verifly.features.home.enums.HomeTransaction
 import com.slice.verifly.utility.disableScreen
 import com.slice.verifly.utility.enableScreen
+import com.slice.verifly.utility.toast
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -42,6 +44,7 @@ class HomeActivity : AppCompatActivity(),
         setContentView(R.layout.activity_home)
         navController = findNavController(homeNavHost.id)
         initToolbar()
+        setUpObservers()
     }
 
     // Operations
@@ -51,6 +54,20 @@ class HomeActivity : AppCompatActivity(),
         toolbar.title = null
         toolbarNavIcon.setOnClickListener { navController.navigateUp() }
         toolbarExpandBtn.setOnClickListener { expandToolbar() }
+    }
+
+    private fun setUpObservers() {
+        viewModel.errorLiveData.observe(this, Observer {
+            if (!it.isNullOrEmpty()) {
+                toast(it)
+            }
+        })
+
+        viewModel.noInternetLiveData.observe(this, Observer {
+            if (!it.isNullOrEmpty()) {
+                toast(it)
+            }
+        })
     }
 
     private fun expandToolbar() {

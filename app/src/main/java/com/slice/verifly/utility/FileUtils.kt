@@ -57,6 +57,25 @@ object FileUtils {
         }
     }
 
+    fun verifyFile(filePath: String, sizeRequired: Int? = null): Pair<Boolean, String?> {
+        val result: Pair<Boolean, String?>
+        val file = File(filePath)
+        result = if (file.exists()) {
+            sizeRequired?.let {
+                if (getFileSizeInMb(filePath) <= it) {
+                    Pair(true, null)
+                } else {
+                    Pair(false, "File size should be less than $sizeRequired Mb")
+                }
+            } ?: kotlin.run {
+                Pair(true, null)
+            }
+        } else {
+            Pair(false, "Seems as if the file doesn't exist. Please check again.")
+        }
+        return result
+    }
+
     fun getFileSizeInMb(filePath: String): Int {
         val file = File(filePath)
         val sizeInKb = (file.length() / 1024).toInt()

@@ -17,6 +17,7 @@ import com.slice.verifly.features.home.enums.TaskForm
 import com.slice.verifly.models.tasks.TaskDocuments
 import com.slice.verifly.utility.AppUtils
 import com.slice.verifly.utility.Constants
+import com.slice.verifly.utility.FileUtils
 import com.slice.verifly.utility.snack
 import kotlinx.android.synthetic.main.dialog_fragment_task_form_details.*
 
@@ -31,6 +32,7 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
         )
         private const val permissionsRequestCode = Constants.MEDIA_PER_REQ_CODE
         private const val MEDIA_REQ_CODE = "mediaReqCode"
+        private const val MEDIA_FILE_PATH = "mediaFilePath"
     }
 
     // Properties
@@ -39,6 +41,7 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
     private var task: TaskDocuments? = null
     private var uiComponent: BaseUiComponent? = null
     private var mediaReqCode: Int? = null
+    private var mediaFilePath: String? = null
 
     // Lifecycle
 
@@ -84,12 +87,18 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
         mediaReqCode?.let {
             outState.putInt(MEDIA_REQ_CODE, it)
         }
+        mediaFilePath?.let {
+            outState.putString(MEDIA_FILE_PATH, it)
+        }
         super.onSaveInstanceState(outState)
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         if (savedInstanceState?.containsKey(MEDIA_REQ_CODE) == true) {
             mediaReqCode = savedInstanceState.getInt(MEDIA_REQ_CODE)
+        }
+        if (savedInstanceState?.containsKey(MEDIA_FILE_PATH) == true) {
+            mediaFilePath = savedInstanceState.getString(MEDIA_FILE_PATH)
         }
         super.onViewStateRestored(savedInstanceState)
     }
@@ -143,8 +152,9 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
                         multiplesRequired = false,
                         uri = null
                     )?.let { target ->
-                        val (intent, currentFilePath) = AppUtils.dispatchCameraIntent(activity)
-                        intent?.let {
+                        val (extraIntent, currentFilePath) = AppUtils.dispatchCameraIntent(activity)
+                        this.mediaFilePath = currentFilePath
+                        extraIntent?.let {
                             val intentChooser = AppUtils.createIntentChooser(target, "Select an option", arrayOf(it))
                             startActivityForResult(intentChooser, reqCode)
                         }
@@ -155,10 +165,22 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
     }
 
     private fun extract(requestCode: Int, intentData: Intent?) {
-        intentData?.data?.let { // gallery
-
+        val filePath = intentData?.data?.let { // gallery
+            activity?.let { context -> FileUtils.getRealPath(context, it) }
         } ?: kotlin.run { // camera
+            mediaFilePath
+        }
+        filePath?.let {
+            checkAndUpload(it)
+        }
+    }
 
+    private fun checkAndUpload(filePath: String) {
+        val (status, errorMessage) = FileUtils.verifyFile(filePath, sizeRequired = 5)
+        if (status) {
+            mediaReqCode?.let { uiComponent?.upload(it, filePath) }
+        } else {
+            errorMessage?.let { showSnack(it) }
         }
     }
 

@@ -2,6 +2,7 @@ package com.slice.verifly.features.home.fragment
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
@@ -10,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.slice.verifly.R
 import com.slice.verifly.features.home.base.BaseDialogFragment
-import com.slice.verifly.features.home.base.BaseUiComponent
 import com.slice.verifly.features.home.communicator.TaskFormDetailsDialogCallback
 import com.slice.verifly.features.home.communicator.UiComponentCommunicator
 import com.slice.verifly.features.home.enums.TaskForm
@@ -39,7 +39,7 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
 
     private var callback: TaskFormDetailsDialogCallback? = null
     private var task: TaskDocuments? = null
-    private var uiComponent: BaseUiComponent? = null
+    private var taskForm: TaskForm? = null
     private var mediaReqCode: Int? = null
     private var mediaFilePath: String? = null
 
@@ -69,18 +69,11 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        dialog?.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                callback?.onSoftBackButtonPressed(true)
-                return@setOnKeyListener true
-            }
-            return@setOnKeyListener false
+        setUpDialog()
+        setListeners()
+        task?.let {
+            activity?.loadTaskFormContents(it)
         }
-        iv_formClose.setOnClickListener {
-            callback?.onDismissed()
-        }
-        loadTaskFormContents()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -120,24 +113,46 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
 
     // Operations
 
-    private fun loadTaskFormContents() {
-        task?.let { task ->
-            when (task.taskID) {
-                TaskForm.OPS0007.name -> {
-                    activity?.let { context ->
-                        uiComponent = TaskForm.OPS0007.showForm(
-                            context = context,
-                            task = task,
-                            communicator = this@TaskFormDetailsDialogFragment
-                        )
-                        uiComponent?.let { ll_formContainer.addView(it) }
-                    }
-                }
-
-                else -> {
-
-                }
+    private fun setUpDialog() {
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog?.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                callback?.onSoftBackButtonPressed(true)
+                return@setOnKeyListener true
             }
+            return@setOnKeyListener false
+        }
+    }
+
+    private fun setListeners() {
+        iv_formClose.setOnClickListener {
+            callback?.onDismissed()
+        }
+        tv_formSubmitButton.setOnClickListener {
+            taskForm?.submitForm()
+        }
+    }
+
+    private fun Context.loadTaskFormContents(task: TaskDocuments) {
+        val component = when (task.taskID) {
+            TaskForm.OPS0007.name -> {
+                taskForm = TaskForm.OPS0007
+                taskForm?.showForm(
+                    context = this,
+                    task = task,
+                    communicator = this@TaskFormDetailsDialogFragment
+                )
+            }
+
+            else -> {
+                null
+            }
+        }
+        component?.let {
+            ll_formContainer.visibility = View.VISIBLE
+            ll_formContainer.addView(it)
+        } ?: kotlin.run {
+            ll_formContainer.visibility = View.GONE
         }
     }
 
@@ -165,12 +180,18 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
     }
 
     private fun extract(requestCode: Int, intentData: Intent?) {
-        val filePath = intentData?.data?.let { // gallery
+        /*val filePath = intentData?.data?.let { // gallery
             activity?.let { context -> FileUtils.getRealPath(context, it) }
-        } ?: kotlin.run { // camera
-            mediaFilePath
-        }
+        } ?: mediaFilePath // camera
         filePath?.let {
+            checkAndUpload( requestCode, it)
+        }*/
+
+        {
+            intentData?.data?.let {
+                activity?.let { context -> FileUtils.getRealPath(context, it) }
+            } ?: mediaFilePath
+        } ()?.let {
             checkAndUpload( requestCode, it)
         }
     }
@@ -178,7 +199,7 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
     private fun checkAndUpload(requestCode: Int, filePath: String) {
         val (status, errorMessage) = FileUtils.verifyFile(filePath, sizeRequired = 5)
         if (status) {
-            uiComponent?.upload(requestCode, filePath)
+            taskForm?.upload(requestCode, filePath)
         } else {
             errorMessage?.let { showSnack(it) }
         }

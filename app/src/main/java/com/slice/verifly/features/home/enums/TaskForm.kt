@@ -10,18 +10,29 @@ import com.slice.verifly.models.tasks.TaskDocuments
 enum class TaskForm(taskId: String): TaskFormOptions {
 
     OPS0007("ops0007") {
+        private var uiComponent: OsvUiComponent? = null
+
         override fun showForm(
             context: Context,
             task: TaskDocuments,
             isEditable: Boolean,
             communicator: UiComponentCommunicator?
         ): BaseUiComponent? {
-            return OsvUiComponent.newInstance(
+            uiComponent = OsvUiComponent.newInstance(
                 context = context,
                 taskDoc = task,
                 isEditable = isEditable,
                 communicator = communicator
             )
+            return uiComponent
+        }
+
+        override fun upload(reqCode: Int, filePath: String) {
+            uiComponent?.upload(reqCode, filePath)
+        }
+
+        override fun submitForm() {
+
         }
     },
 
@@ -34,6 +45,10 @@ enum class TaskForm(taskId: String): TaskFormOptions {
         ): BaseUiComponent? {
             return null
         }
+
+        override fun submitForm() {
+
+        }
     },
 
     OPS0005("ops0005") {
@@ -44,6 +59,10 @@ enum class TaskForm(taskId: String): TaskFormOptions {
             communicator: UiComponentCommunicator?
         ): BaseUiComponent? {
             return null
+        }
+
+        override fun submitForm() {
+
         }
     },
 
@@ -56,6 +75,10 @@ enum class TaskForm(taskId: String): TaskFormOptions {
         ): BaseUiComponent? {
             return null
         }
+
+        override fun submitForm() {
+
+        }
     },
 
     OPS0003("ops0003") {
@@ -66,6 +89,10 @@ enum class TaskForm(taskId: String): TaskFormOptions {
             communicator: UiComponentCommunicator?
         ): BaseUiComponent? {
             return null
+        }
+
+        override fun submitForm() {
+
         }
     },
 
@@ -78,6 +105,10 @@ enum class TaskForm(taskId: String): TaskFormOptions {
         ): BaseUiComponent? {
             return null
         }
+
+        override fun submitForm() {
+
+        }
     },
 
     OPS0001("ops0001") {
@@ -88,6 +119,10 @@ enum class TaskForm(taskId: String): TaskFormOptions {
             communicator: UiComponentCommunicator?
         ): BaseUiComponent? {
             return null
+        }
+
+        override fun submitForm() {
+
         }
     }
 }

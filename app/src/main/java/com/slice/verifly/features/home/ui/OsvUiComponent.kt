@@ -268,10 +268,9 @@ class OsvUiComponent(
         }
     }
 
-    // base function overridden to get notified
+    // public functions for view operations
 
-    override fun upload(reqCode: Int, filePath: String) {
-        super.upload(reqCode, filePath)
+    fun upload(reqCode: Int, filePath: String) {
         when (reqCode) {
             Constants.OSV_SELFIE_MEDIA_REQ_CODE -> {
                 selfieUploader?.loadImage(filePath)

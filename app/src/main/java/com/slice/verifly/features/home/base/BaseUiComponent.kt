@@ -8,4 +8,7 @@ open class BaseUiComponent(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-): ConstraintLayout(context, attrs, defStyleAttr)
+): ConstraintLayout(context, attrs, defStyleAttr) {
+
+    open fun upload(reqCode: Int, filePath: String) {}
+}

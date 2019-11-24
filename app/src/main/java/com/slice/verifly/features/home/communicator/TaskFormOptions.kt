@@ -9,6 +9,7 @@ interface TaskFormOptions {
     fun showForm(
         context: Context,
         task: TaskDocuments,
-        isEditable: Boolean = true
+        isEditable: Boolean = true,
+        communicator: UiComponentCommunicator? = null
     ): BaseUiComponent?
 }

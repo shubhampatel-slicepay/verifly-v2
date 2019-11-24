@@ -32,10 +32,19 @@ object Constants {
     // permission requests -> starts from 101
 
     const val READ_PHONE_STATE_PER_REQ_CODE = 101
+    const val MEDIA_PER_REQ_CODE = 102
 
-    // view requests -> starts from 201
+    // OS components usage requests -> starts from 201
 
-    const val TASK_FORM_DETAILS_DIALOG_REQ = 201
+    const val OSV_SELFIE_MEDIA_REQ_CODE = 201
+    const val OSV_PAN_MEDIA_REQ_CODE = 202
+    const val OSV_FRONT_ADDRESS_PROOF_MEDIA_REQ_CODE = 203
+    const val OSV_REAR_ADDRESS_PROOF_MEDIA_REQ_CODE = 204
+    const val OSV_PHOTO_OF_USER_MEDIA_REQ_CODE = 205
+
+    // view requests -> starts from 301
+
+    const val TASK_FORM_DETAILS_DIALOG_REQ = 301
 
     // keys used for saving state
 

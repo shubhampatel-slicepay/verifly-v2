@@ -55,7 +55,7 @@ abstract class BaseFragment : Fragment() {
                             askPermission(permissions = *permissions, requestCode = requestCode)
                         }
                     } else {
-                        onReadPhoneStatePermission()
+                        onReadPhoneStatePermitted()
                     }
                 }
             }
@@ -70,7 +70,7 @@ abstract class BaseFragment : Fragment() {
         startActivity(intent)
     }
 
-    open fun onReadPhoneStatePermission() {
-        SlicePayLog.info(TAG, "onReadPhoneStatePermission")
+    open fun onReadPhoneStatePermitted() {
+        SlicePayLog.info(TAG, "onReadPhoneStatePermitted")
     }
 }

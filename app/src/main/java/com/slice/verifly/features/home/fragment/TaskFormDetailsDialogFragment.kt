@@ -1,24 +1,36 @@
 package com.slice.verifly.features.home.fragment
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import com.slice.verifly.R
+import com.slice.verifly.features.home.base.BaseDialogFragment
 import com.slice.verifly.features.home.base.BaseUiComponent
 import com.slice.verifly.features.home.communicator.TaskFormDetailsDialogCallback
+import com.slice.verifly.features.home.communicator.UiComponentCommunicator
 import com.slice.verifly.features.home.enums.TaskForm
 import com.slice.verifly.models.tasks.TaskDocuments
+import com.slice.verifly.utility.AppUtils
 import com.slice.verifly.utility.Constants
+import com.slice.verifly.utility.snack
 import kotlinx.android.synthetic.main.dialog_fragment_task_form_details.*
 
-class TaskFormDetailsDialogFragment: DialogFragment() {
+class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicator {
 
     companion object {
         private const val TAG = "TaskFormDetailsDialogFragment"
         fun newInstance() = TaskFormDetailsDialogFragment()
+        private val permissions = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        )
+        private const val permissionsRequestCode = Constants.MEDIA_PER_REQ_CODE
+        private const val MEDIA_REQ_CODE = "mediaReqCode"
     }
 
     // Properties
@@ -26,6 +38,7 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
     private var callback: TaskFormDetailsDialogCallback? = null
     private var task: TaskDocuments? = null
     private var uiComponent: BaseUiComponent? = null
+    private var mediaReqCode: Int? = null
 
     // Lifecycle
 
@@ -67,6 +80,35 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
         loadTaskFormContents()
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        mediaReqCode?.let {
+            outState.putInt(MEDIA_REQ_CODE, it)
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        if (savedInstanceState?.containsKey(MEDIA_REQ_CODE) == true) {
+            mediaReqCode = savedInstanceState.getInt(MEDIA_REQ_CODE)
+        }
+        super.onViewStateRestored(savedInstanceState)
+    }
+
+    // OS callbacks
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            Constants.OSV_SELFIE_MEDIA_REQ_CODE, Constants.OSV_PAN_MEDIA_REQ_CODE,
+            Constants.OSV_FRONT_ADDRESS_PROOF_MEDIA_REQ_CODE, Constants.OSV_REAR_ADDRESS_PROOF_MEDIA_REQ_CODE,
+            Constants.OSV_PHOTO_OF_USER_MEDIA_REQ_CODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    extract(requestCode, data)
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     // Operations
 
     private fun loadTaskFormContents() {
@@ -74,7 +116,11 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
             when (task.taskID) {
                 TaskForm.OPS0007.name -> {
                     activity?.let { context ->
-                        uiComponent = TaskForm.OPS0007.showForm(context = context, task = task)
+                        uiComponent = TaskForm.OPS0007.showForm(
+                            context = context,
+                            task = task,
+                            communicator = this@TaskFormDetailsDialogFragment
+                        )
                         uiComponent?.let { ll_formContainer.addView(it) }
                     }
                 }
@@ -84,5 +130,61 @@ class TaskFormDetailsDialogFragment: DialogFragment() {
                 }
             }
         }
+    }
+
+    private fun openPicker(reqCode: Int) {
+        if (askRunTimePermissions(permissions, permissionsRequestCode)) {
+            when (reqCode) {
+                Constants.OSV_SELFIE_MEDIA_REQ_CODE, Constants.OSV_PAN_MEDIA_REQ_CODE,
+                Constants.OSV_FRONT_ADDRESS_PROOF_MEDIA_REQ_CODE, Constants.OSV_REAR_ADDRESS_PROOF_MEDIA_REQ_CODE,
+                Constants.OSV_PHOTO_OF_USER_MEDIA_REQ_CODE -> {
+                    AppUtils.dispatchGalleryIntent(
+                        imagesRequired = true,
+                        multiplesRequired = false,
+                        uri = null
+                    )?.let { target ->
+                        val (intent, currentFilePath) = AppUtils.dispatchCameraIntent(activity)
+                        intent?.let {
+                            val intentChooser = AppUtils.createIntentChooser(target, "Select an option", arrayOf(it))
+                            startActivityForResult(intentChooser, reqCode)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun extract(requestCode: Int, intentData: Intent?) {
+        intentData?.data?.let { // gallery
+
+        } ?: kotlin.run { // camera
+
+        }
+    }
+
+    // Communicator
+
+    override fun onMediaAccessRequested(reqCode: Int) {
+        this.mediaReqCode = reqCode
+        mediaReqCode?.let {
+            openPicker(it)
+        }
+    }
+
+    // base function overridden to get notified
+
+    override fun onMediaAccessPermitted() {
+        super.onMediaAccessPermitted()
+        mediaReqCode?.let {
+            openPicker(it)
+        }
+    }
+
+    override fun showSnack(message: String) {
+        super.showSnack(message)
+        cl_taskFormDetailsRootContainer.snack(message)
+            .setDuration(5000)
+            .setAction("OK") { AppUtils.openSettings(activity) }
+            .show()
     }
 }

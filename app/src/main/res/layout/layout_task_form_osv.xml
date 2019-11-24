@@ -415,7 +415,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/cl_selfie_with_user_container"
+                android:id="@+id/cl_photo_of_user_container"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -426,7 +426,7 @@
                 android:background="@drawable/bg_task_form_fields">
 
             <TextView
-                    android:id="@+id/tv_selfie_with_user"
+                    android:id="@+id/tv_photo_of_user"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:paddingStart="8dp"
@@ -440,14 +440,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                    android:id="@+id/iv_add_selfie_with_user"
+                    android:id="@+id/ll_photo_of_user"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:layout_marginTop="4dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_selfie_with_user" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_photo_of_user" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -460,7 +460,7 @@
                 android:hint="@string/physical_osv_comments"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cl_selfie_with_user_container">
+                app:layout_constraintTop_toBottomOf="@id/cl_photo_of_user_container">
 
             <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tiet_comment"

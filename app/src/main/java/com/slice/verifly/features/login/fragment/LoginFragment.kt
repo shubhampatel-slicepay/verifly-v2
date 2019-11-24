@@ -146,7 +146,7 @@ class LoginFragment: BaseFragment() {
 
     // Base to Child communication
 
-    override fun onReadPhoneStatePermission() {
+    override fun onReadPhoneStatePermitted() {
         proceedToLogIn()
     }
 

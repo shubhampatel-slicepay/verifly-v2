@@ -43,6 +43,15 @@ class FileUploaderView(
         }
     }
 
+    fun loadImage(url: String) {
+        iv_attachment_img?.load(url) {
+            crossfade(true)
+            placeholder(R.drawable.gif_uploading)
+            transformations(CircleCropTransformation())
+            memoryCachePolicy(CachePolicy.DISABLED)
+        }
+    }
+
     fun showAttachmentName(name: String) {
         tv_attachment_name.visibility = View.VISIBLE
         tv_attachment_name.text = name

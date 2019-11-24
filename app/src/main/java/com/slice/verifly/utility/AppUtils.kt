@@ -2,9 +2,12 @@ package com.slice.verifly.utility
 
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
+import android.provider.Settings
 import android.text.TextUtils
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
@@ -16,8 +19,11 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import java.io.File
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 object AppUtils {
 
@@ -201,5 +207,94 @@ object AppUtils {
 
     fun formatDate(date: Date): String {
         return SimpleDateFormat("dd MMM, yyyy", Locale.getDefault()).format(date)
+    }
+
+    fun openSettings(context: Context?) {
+        context?.let {
+            val uri = Uri.fromParts("package", it.packageName, null)
+            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                .setData(uri)
+            it.startActivity(intent)
+        }
+    }
+
+    fun createIntentChooser(target: Intent, title: String, extraIntents: Array<Intent>): Intent {
+        return Intent.createChooser(target, title).putExtra(Intent.EXTRA_INITIAL_INTENTS, extraIntents)
+    }
+
+    fun dispatchGalleryIntent(
+        imagesRequired: Boolean = true,
+        videosRequired: Boolean = false,
+        pdfsRequired: Boolean = false,
+        multiplesRequired: Boolean = false,
+        uri: Uri? = null
+    ): Intent? {
+        val galleryIntent = Intent(Intent.ACTION_GET_CONTENT, uri)
+            .addCategory(Intent.CATEGORY_OPENABLE)
+        var mimeTypes: Array<String>? = null
+        when {
+            imagesRequired and videosRequired and pdfsRequired -> {
+                galleryIntent.type = "*/*"
+                mimeTypes = arrayOf("image/*", "video/*", "application/pdf")
+            }
+            imagesRequired and videosRequired and !pdfsRequired -> {
+                galleryIntent.type = "*/*"
+                mimeTypes = arrayOf("image/*", "video/*")
+            }
+            imagesRequired and !videosRequired and pdfsRequired -> {
+                galleryIntent.type = "*/*"
+                mimeTypes = arrayOf("image/*", "application/pdf")
+            }
+            !imagesRequired and videosRequired and pdfsRequired -> {
+                galleryIntent.type = "*/*"
+                mimeTypes = arrayOf("video/*", "application/pdf")
+            }
+            imagesRequired and !videosRequired and !pdfsRequired -> galleryIntent.type = "image/*"
+            !imagesRequired and videosRequired and !pdfsRequired -> galleryIntent.type = "video/*"
+            !imagesRequired and !videosRequired and pdfsRequired -> galleryIntent.type = "application/pdf"
+        }
+        mimeTypes?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, it)
+            }
+        }
+        if (multiplesRequired) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                galleryIntent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+            }
+        }
+        return galleryIntent
+    }
+
+    fun dispatchCameraIntent(context: Context?): Pair<Intent?, String?> {
+        var cameraIntent: Intent? = null
+        var currentFilePath: String? = null
+        context?.let {
+            cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            cameraIntent?.resolveActivity(context.packageManager)?.let {
+                var photoFile: File? = null
+                try {
+                    photoFile = FileUtils.createImageFile(context)
+                    currentFilePath = photoFile.absolutePath
+                } catch (e: IOException) {
+                    SlicePayLog.info(TAG, "dispatchCameraIntent: ${e.message}")
+                }
+                photoFile?.let {
+                    val photoUri = FileUtils.getUriForFile(context, file = it)
+                    cameraIntent?.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
+                }
+            }
+        }
+        return Pair(cameraIntent, currentFilePath)
+    }
+
+    fun configureCloudinary(): HashMap<String, Any> {
+        return HashMap<String, Any>().apply {
+            put("cloud_name", "slice")
+            put("phash", true)
+            put("api_key", "327795729794347")
+            put("api_secret", "v-7oGOFIYRy3Fd5kdBLUYpJ3VZA")
+        }
     }
 }

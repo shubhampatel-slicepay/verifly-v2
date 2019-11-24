@@ -171,14 +171,14 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
             mediaFilePath
         }
         filePath?.let {
-            checkAndUpload(it)
+            checkAndUpload( requestCode, it)
         }
     }
 
-    private fun checkAndUpload(filePath: String) {
+    private fun checkAndUpload(requestCode: Int, filePath: String) {
         val (status, errorMessage) = FileUtils.verifyFile(filePath, sizeRequired = 5)
         if (status) {
-            mediaReqCode?.let { uiComponent?.upload(it, filePath) }
+            uiComponent?.upload(requestCode, filePath)
         } else {
             errorMessage?.let { showSnack(it) }
         }
@@ -188,18 +188,14 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
 
     override fun onMediaAccessRequested(reqCode: Int) {
         this.mediaReqCode = reqCode
-        mediaReqCode?.let {
-            openPicker(it)
-        }
+        openPicker(reqCode)
     }
 
     // base function overridden to get notified
 
     override fun onMediaAccessPermitted() {
         super.onMediaAccessPermitted()
-        mediaReqCode?.let {
-            openPicker(it)
-        }
+        mediaReqCode?.let { openPicker(it) }
     }
 
     override fun showSnack(message: String) {

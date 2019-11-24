@@ -25,7 +25,7 @@ abstract class BaseDialogFragment: DialogFragment() {
     protected fun askRunTimePermissions(permissions: Array<String>, requestCode: Int): Boolean {
         this.permissions = permissions
         this.permissionsRequestCode = requestCode
-        return checkPermissions(this.permissions, this.permissionsRequestCode)
+        return checkPermissions(permissions, requestCode)
     }
 
     // operations
@@ -42,12 +42,12 @@ abstract class BaseDialogFragment: DialogFragment() {
                 if (listPermissionsNeeded.isNotEmpty()) {
                     requestCode?.let { reqCode ->
                         requestPermissions(listPermissionsNeeded.toTypedArray(), reqCode)
-                    } ?: return true // permissionsRequestCode = null => permitted
-                    return false // listPermissionsNeeded != null => not permitted
+                    } ?: return false // permissionsRequestCode = null => not permitted (made default case)
+                    return false // listPermissionsNeeded != null => not permitted (genuine case)
                 }
-                return true // listPermissionsNeeded = null => permitted
-            } ?: return true // permissions = null => permitted
-        } ?: return false // context = null => not permitted
+                return true // listPermissionsNeeded = null => permitted (genuine case)
+            } ?: return false // permissions = null => not permitted (made default case)
+        } ?: return false // context = null => not permitted (made default case)
     }
 
 

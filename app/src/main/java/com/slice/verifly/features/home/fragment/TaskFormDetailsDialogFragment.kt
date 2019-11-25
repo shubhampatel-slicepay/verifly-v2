@@ -212,6 +212,12 @@ class TaskFormDetailsDialogFragment: BaseDialogFragment(), UiComponentCommunicat
         openPicker(reqCode)
     }
 
+    override fun uploadFilesToCloudinary(files: Array<String?>) {
+        while (files.isNotEmpty()) {
+
+        }
+    }
+
     // base function overridden to get notified
 
     override fun onMediaAccessPermitted() {

@@ -5,6 +5,7 @@ import android.text.Editable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import androidx.core.view.isVisible
 import com.slice.verifly.R
 import com.slice.verifly.customview.FileUploaderView
 import com.slice.verifly.features.home.base.BaseUiComponent
@@ -80,6 +81,12 @@ class OsvUiComponent(
     private var frontAddressProofUploader: FileUploaderView? = null
     private var rearAddressProofUploader: FileUploaderView? = null
     private var photoOfUserUploader: FileUploaderView? = null
+
+    private var selfieFilePath: String? = null
+    private var panFilePath: String? = null
+    private var frontAddressProofFilePath: String? = null
+    private var rearAddressProofFilePath: String? = null
+    private var photoOfUserFilePath: String? = null
 
     // Operations
 
@@ -273,24 +280,45 @@ class OsvUiComponent(
     fun upload(reqCode: Int, filePath: String) {
         when (reqCode) {
             Constants.OSV_SELFIE_MEDIA_REQ_CODE -> {
+                selfieFilePath = filePath
                 selfieUploader?.loadImage(filePath)
             }
 
             Constants.OSV_PAN_MEDIA_REQ_CODE -> {
+                panFilePath = filePath
                 panUploader?.loadImage(filePath)
             }
 
             Constants.OSV_FRONT_ADDRESS_PROOF_MEDIA_REQ_CODE -> {
+                frontAddressProofFilePath = filePath
                 frontAddressProofUploader?.loadImage(filePath)
             }
 
             Constants.OSV_REAR_ADDRESS_PROOF_MEDIA_REQ_CODE -> {
+                rearAddressProofFilePath = filePath
                 rearAddressProofUploader?.loadImage(filePath)
             }
 
             Constants.OSV_PHOTO_OF_USER_MEDIA_REQ_CODE -> {
+                photoOfUserFilePath = filePath
                 photoOfUserUploader?.loadImage(filePath)
             }
         }
+    }
+
+    fun validate(): Boolean {
+        if (rb_selfie_not_verified.isChecked) return false
+        if (cl_pan_container.isVisible and rb_pan_not_verified.isChecked) return false
+        if (rb_address_proofs_not_verified.isChecked) return false
+        return true
+    }
+
+    fun submit() {
+        val files = arrayOf(
+            selfieFilePath,
+            frontAddressProofFilePath,
+            rearAddressProofFilePath
+        )
+        communicator?.uploadFilesToCloudinary(files)
     }
 }

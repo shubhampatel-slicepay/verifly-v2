@@ -32,7 +32,9 @@ enum class TaskForm(taskId: String): TaskFormOptions {
         }
 
         override fun submitForm() {
-
+            if (uiComponent?.validate() == true) {
+                uiComponent?.submit()
+            }
         }
     },
 
